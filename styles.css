@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+
+/* --- Global Theme Variable Tokens --- */
+:root {
+  /* Light Mode Config (Palette 1) */
+  --bg-canvas: #eeeeee;
+  --bg-surface: #ffffff;
+  --text-main: #2b2b28;
+  --text-muted: #666666;
+  --primary-accent: #71a0a5;
+  --secondary-accent: #845464;
+  --border-color: #acc6aa;
+  --input-bg: #f9f9f9;
+  --shadow: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Switch (Palette 2) */
+  --bg-canvas: #1c121e;
+  --bg-surface: #2d1f30;
+  --text-main: #f3cba5;
+  --text-muted: #d5b492;
+  --primary-accent: #975a5e;
+  --secondary-accent: #f3cba5;
+  --border-color: #49334e;
+  --input-bg: #221625;
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* --- Layout Rules --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  line-height: 1.6;
+}
+
+
+/* --- Header and Logo Panel --- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: var(--primary-accent);
+  font-weight: 300;
+}
+
+.theme-toggle-btn {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-accent);
+}
+
+
+/* --- Form Container and Card --- */
+.form-container {
+  max-width: 750px;
+  margin: 40px auto 80px auto;
+  padding: 0 20px;
+}
+
+.onboarding-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px var(--shadow);
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.form-intro h1, .form-section h2, .logo {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.form-intro {
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.form-intro h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.form-intro p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+/* --- Form Container and Card --- */
+.form-section {
+  margin-bottom: 35px;
+}
+
+.form-section h2 {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  color: var(--primary-accent);
+}
+
+/* Smart Grid for side-by-side inputs on desktop, stacks automatically on mobile */
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Universal styles for Inputs, Textareas, and Dropdowns */
+.input-group input,
+.input-group textarea,
+.input-group select {
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.input-group textarea {
+  resize: vertical;
+}
+
+/* Cute focus ring when clicking into fields */
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 3px var(--border-color);
+}
+
+/* Accessibility Focus Ring */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--primary-accent);
+  outline-offset: 2px;
+}
+
+/* --- Our Submit Button --- */
+.form-actions {
+  margin-top: 20px;
+}
+
+.submit-btn {
+  background-color: var(--primary-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 32px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.submit-btn:hover {
+  background-color: var(--secondary-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--shadow);
+}
+
+[data-theme="dark"] .submit-btn:hover {
+  color: #25161b; 
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
