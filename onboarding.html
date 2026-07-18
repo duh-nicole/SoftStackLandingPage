@@ -19,11 +19,14 @@
         <div class="form-intro">
             <h1>Project Initiation Form</h1>
             <p>This is the part where you get to tell me what you want, what you don't want and much more. Need a
-                giant animated bag of Cheetos dancing? You got it! Want a third party payment processor? I'm
-                your girl! Fill out the form below so we can come to an understanding.</p>
+                giant animated bag of Cheetos dancing in the corner that only pops up on your screen? You got it!
+                Want a third party payment processor? I'm your girl! Tell me everything I need to know about you.
+                Think I might need to know but don't know if it's important to ask? No worries, just ask. Fill
+                out the form below to get started. Don't worry, we will not cover everything here, I will be
+                reaching out to you shortly.</p>
         </div>
 
-        <form id="onboardingForm" action="https://api.web3forms.com/submit" method="POST">
+        <form id="onboardingForm">
             <input type="hidden" name="access_key" value="53f6faa6-c347-46cd-a7ff-b4cb6defd107">
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
@@ -31,22 +34,23 @@
                 <h2>01. Business Profile</h2>
                 <div class="input-grid">
                     <div class="input-group">
-                        <label for="clientName">Your Name</label>
-                        <input type="text" id="clientName" name="name" required maxlength="50" placeholder="Jane Doe">
+                        <label for="clientName">First and Last Name</label>
+                        <input type="text" id="clientName" name="name" required maxlength="50"
+                               placeholder="Amanda Bandana">
                     </div>
                     <div class="input-group">
                         <label for="clientCompany">Company Name</label>
                         <input type="text" id="clientCompany" name="company" maxlength="100"
-                               placeholder="Acme Corp (Optional)">
+                               placeholder="The Most Literal Housekeeper at Your Service, LLC">
                     </div>
                     <div class="input-group">
                         <label for="clientEmail">Email Address</label>
-                        <input type="email" id="clientEmail" name="email" required placeholder="jane@company.com">
+                        <input type="email" id="clientEmail" name="email" required placeholder="ama_bda@company.com">
                     </div>
                     <div class="input-group">
                         <label for="clientPhone">Phone Number</label>
                         <input type="tel" id="clientPhone" name="phone" maxlength="20"
-                               placeholder="555-0123 (Optional)">
+                               required placeholder="402-555-0123">
                     </div>
                     <div class="input-group">
                         <label for="preferredContact">Preferred Contact Method</label>
@@ -59,7 +63,7 @@
                     <div class="input-group">
                         <label for="discoverySource">How did you hear about us?</label>
                         <input type="text" id="discoverySource" name="discovery_source"
-                               placeholder="Google, referral, Twitter...">
+                               placeholder="Google, referral, LinkedIn...">
                     </div>
                 </div>
             </section>
@@ -69,37 +73,38 @@
 
                 <div class="input-group">
                     <label for="businessSummary">Business Summary & Context</label>
-                    <textarea id="businessSummary" name="business_summary" rows="3" required maxlength="1000"
-                              placeholder="What does your business do?"></textarea>
+                    <textarea id="businessSummary" name="business_summary" rows="3" required maxlength="2000"
+                              placeholder="What does your business do? Tell us about you!"></textarea>
                 </div>
 
                 <div class="input-group">
                     <label for="targetAudience">Target Audience</label>
                     <textarea id="targetAudience" name="target_audience" rows="2" required
-                              placeholder="Who are your primary users?"></textarea>
+                              placeholder="Who are your primary users? What are their needs and pain points?"></textarea>
                 </div>
 
                 <div class="input-group">
                     <label for="primaryGoal">Primary Digital Goal</label>
-                    <input type="text" id="primaryGoal" name="primary_goal" required
+                    <input type="text" id="primaryGoal" name="primary_goal" required maxlength="2000"
                            placeholder="e.g., Build a fast e-commerce platform, automate client booking...">
                 </div>
 
                 <div class="input-group">
                     <label for="painPoint">What is the biggest pain point of your current setup?</label>
-                    <textarea id="painPoint" name="pain_point" rows="2" required
+                    <textarea id="painPoint" name="pain_point" rows="2" required maxlength="2000"
                               placeholder="e.g., Manual spreadsheets are slowing down order tracking, or current site crashes on mobile..."></textarea>
                 </div>
 
                 <div class="input-group">
                     <label for="creativeEnergy">Creative Energy / Style Vibe (1 = Corporate Clean, 5 = Cyberpunk
-                        Chaos)</label>
+                        Chaos, it's just a slider.)</label>
                     <input type="range" id="creativeEnergy" name="creative_energy" min="1" max="5" value="3">
                 </div>
 
                 <div class="input-group">
                     <label for="antiFeatures">What makes you cringe? (Design or feature choices you completely
-                        hate)</label>
+                        hate or absolutely cannot have per some random mandate that no one knows who created it but
+                        we all have to follow it anyway.)</label>
                     <textarea id="antiFeatures" name="anti_features" rows="2"
                               placeholder="e.g., Hidden popups, overly complex dropdowns, the color neon green..."></textarea>
                 </div>
@@ -114,8 +119,11 @@
 
                 <div class="input-group">
                     <label for="accessAccommodations">Are there any specific accessibility accommodations your users
-                        require? (Optional)</label>
+                        require? It's free, don't worry. This may be an optional field to fill out but it doesn't cost anything extra to accomodate
+                        everybody.
+                        </label>
                     <textarea id="accessAccommodations" name="access_accommodations" rows="2"
+                              maxlength="2000"
                               placeholder="e.g., Strict WCAG screen-reader compliance, large high-contrast visual elements..."></textarea>
                 </div>
 
@@ -123,14 +131,14 @@
                     <label>Required Platform Features</label>
                     <div class="checkbox-grid"
                          style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-                        <label><input type="checkbox" name="features" value="user_auth"> User Authentication /
-                            Logins</label>
-                        <label><input type="checkbox" name="features" value="payment_processing"> Payment Gateway
-                            (Stripe)</label>
-                        <label><input type="checkbox" name="features" value="dashboard"> Admin Dashboard &
-                            Analytics</label>
-                        <label><input type="checkbox" name="features" value="api_integration"> Third-Party API
-                            Integrations</label>
+                        <label><input type="checkbox" name="features" value="user_auth">
+                            User Authentication / Logins</label>
+                        <label><input type="checkbox" name="features" value="payment_processing">
+                            Payment Gateway (Stripe)</label>
+                        <label><input type="checkbox" name="features" value="dashboard">
+                            Admin Dashboard & Analytics</label>
+                        <label><input type="checkbox" name="features" value="api_integration">
+                            Third-Party API Integrations</label>
                     </div>
                 </div>
             </section>
@@ -155,6 +163,29 @@
                             <option value="$5k-$10k">$5,000 - $10,000</option>
                             <option value="$10k+">$10,000+</option>
                         </select>
+                    </div>
+                </div>
+            </section>
+            <section class="form-section">
+                <h2>04. Post-Launch Support</h2>
+                <div class="input-group">
+                    <label>Would you like to secure a monthly maintenance and availability retainer?</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <label style="font-weight: normal;">
+                            <input type="radio" name="maintenance_plan" value="yes_retainer" checked
+                                   style="width: auto; margin-right: 8px;">
+                            <strong>Yes, keep me on the grid!</strong> After the 30-day warranty, I am happy to remain
+                            on-call to maintain your site, monitor security, and fix any system breaks for $50/month
+                            (covering up to 1 hour of work per month). Any additional work will be billed at my competitive hourly rate.
+                        </label>
+                        <label style="font-weight: normal;">
+                            <input type="radio" name="maintenance_plan" value="warranty_only"
+                                   style="width: auto; margin-right: 8px;">
+                            <strong>30-Day Warranty Only, Thanks though!</strong> Just the standard 30 days of launch
+                            support;
+                            future
+                            updates/fixes will be billed at an hourly rate based on availability.
+                        </label>
                     </div>
                 </div>
             </section>
