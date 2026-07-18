@@ -181,10 +181,9 @@
                         <label style="font-weight: normal;">
                             <input type="radio" name="maintenance_plan" value="warranty_only"
                                    style="width: auto; margin-right: 8px;">
-                            <strong>30-Day Warranty Only, Thanks though!</strong> Just the standard 30 days of launch
-                            support;
-                            future
-                            updates/fixes will be billed at an hourly rate based on availability.
+                            <strong>30-Day Warranty Only, Thanks though!</strong>
+                            Just the standard 30 days of launch support; future updates/fixes will be billed at an
+                            hourly rate based on availability.
                         </label>
                     </div>
                 </div>
@@ -234,7 +233,7 @@
 
             if (data.success) {
                 alert(
-                    `✨ Parameters aligned! Your project brief has been tucked safely into our queue. We're pouring a fresh cup of coffee and looking over your ideas right now.`);
+                    `✨ Your project brief has been tucked safely into our queue. We're pouring a fresh cup of coffee and looking over your ideas right now.`);
                 onboardingForm.reset();
             } else {
                 alert(`☕ Ope, just a tiny hiccup!: ${data.message || 'Please check your fields.'}`);
