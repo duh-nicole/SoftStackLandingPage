@@ -8,119 +8,113 @@
 </head>
 <body>
 
-    <header class="app-header">
-        <div class="logo">SoftStack<span>Studios</span></div>
-        <div>
-            <a href="onboarding.html" class="submit-btn" style="text-decoration: none; padding: 8px 16px; font-size: 0.9rem;">Run Onboarding.exe</a>
-            <button class="theme-toggle-btn" id="themeToggle" style="margin-left: 10px;">Toggle Theme</button>
+<header class="app-header">
+    <div class="logo">SoftStack<span>Studios</span></div>
+    <div class="header-nav">
+        <a href="onboarding.html" class="submit-btn nav-btn">Run Onboarding.exe</a>
+        <button class="theme-toggle-btn" id="themeToggle">Toggle Theme</button>
+    </div>
+</header>
+
+<main class="form-container landing-main">
+
+    <section class="form-intro hero-section">
+        <h1 class="hero-title">Cozy Vibes. Clean Code.</h1>
+        <p class="hero-subtitle">
+            Welcome to SoftStack Studios. I build secure backend pipelines and fully accessible digital frameworks
+            wrapped in a cozy retro aesthetic.
+        </p>
+        <a href="onboarding.html" class="submit-btn cta-btn">
+            Click to do yourself a favor and just get a little info, that's all. No pressure. Just click, no worries. Be
+            happy.
+        </a>
+    </section>
+
+    <section class="portfolio-section">
+        <h2 class="section-title">
+            See My Previous Works
+        </h2>
+
+        <div class="project-grid">
+
+            <article class="project-card">
+                <div class="card-window-header">
+                    <span>drip_filter_dashboard.sys</span>
+                    <span aria-hidden="true">[ - ▢ ✕ ]</span>
+                </div>
+                <div class="card-body">
+                    <div class="preview-frame">
+                        <img src="assets/dripfilter.png"
+                             alt="Preview of drip Filter dashboard interface showing user data filtered by ID number"
+                             class="preview-img">
+                    </div>
+                    <h3 class="card-title">DripFilter</h3>
+                    <p class="card-desc">
+                        An interactive data visualization and parsing interface. Features dynamic client-side
+                        filtering, multi-criteria sorting, and responsive conditional layout styling designed to
+                        make searching through complex datasets efficient and intuitive.
+                    </p>
+                </div>
+            </article>
+
+            <article class="project-card">
+                <div class="card-window-header">
+                    <span>grade_quackulator_v2.exe</span>
+                    <span aria-hidden="true">[ - ▢ ✕ ]</span>
+                </div>
+                <div class="card-body">
+                    <div class="preview-frame">
+                        <img src="assets/gradequackulator_results.png"
+                             alt="Preview of grade Quack-u-lator after 10 assignments have been added showing weighted grade logic"
+                             class="preview-img">
+                    </div>
+                    <h3 class="card-title">Grade Quackulator</h3>
+                    <p class="card-desc">
+                        A responsive weighted grade calculator featuring a playful retro-warm aesthetic. Built with
+                        React state hooks to manage dynamic grade cards, handle error states for weights, and run a
+                        target-goal calculator that tells you exactly what score you need on your final.
+                    </p>
+                </div>
+            </article>
+
         </div>
-    </header>
+    </section>
 
-    <main class="form-container" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-
-        <section class="form-intro" style="text-align: center; margin-bottom: 60px;">
-            <h1 style="font-size: 3rem; margin-bottom: 15px;">Cozy Vibes. Clean Code.</h1>
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px auto;">
-                Welcome to SoftStack Studios. I build secure backend pipelines and fully accessible digital frameworks
-                wrapped in a cozy retro aesthetic.
+    <section class="operator-profile">
+        <div class="avatar-frame">
+            <img src="assets/brainnotpinky.jpg" alt="Profile avatar for Nicole" class="avatar-img">
+        </div>
+        <div class="operator-info">
+            <h3 class="operator-title">// System Operator: Nicole</h3>
+            <p class="operator-bio">
+                Full-stack web software engineer focused on building robust backends and resilient system
+                integrations.<br><br>
+                Crafting secure digital environments from a cozy corner somewhere with a cat curled up nearby.<br><br>
+                Lovingly called Moomer by her three children, she enjoys forgetting to water the dozens of
+                houseplants she has, making her own bread and pasta from scratch, and listening to the sounds of
+                Reddit stories read over Minecraft or Subway Surfers gameplay.<br><br>
+                She is a firm believer that the best code is clean as it is fly, well-documented, and written
+                with care for the next person who will read it.
             </p>
-            <a href="onboarding.html" class="submit-btn" style="text-decoration: none; display: inline-block; padding: 15px 30px; font-size: 1.1rem; font-weight: bold;">
-                ## Click to do yourself a favor and just get a little info, that's all. No pressure. Just click, no
-                worries. Be happy. ##
-            </a>
-        </section>
+        </div>
+    </section>
 
-        <section style="margin-bottom: 60px;">
-            <h2 style="font-family: inherit; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; border-bottom: 2px dashed var(--border-color); padding-bottom: 10px;">
-                ## See my previous works! ##
-            </h2>
+</main>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
+<footer class="app-footer">
+    <p>© 2026 SOFTSTACK STUDIOS. ALL RIGHTS RESERVED. I'M SO VERY FOR REAL, BUDDY.</p>
+</footer>
 
-                <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px var(--shadow);">
-                    <div style="background: var(--input-bg); border-bottom: 1px solid var(--border-color); padding: 10px 15px; font-size: 0.8rem; font-weight: bold; display: flex; justify-content: space-between; color: var(--text-muted); font-family: monospace;">
-                        <span>drip_filter_dashboard.sys</span>
-                        <span>[ - ▢ ✕ ]</span>
-                    </div>
-                    <div style="padding: 24px;">
-                        <div style="width: 100%; height: 180px; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                            <img src="assets/dripfilter.png"
-                                 alt="Preview of drip Filter dashboard interface with an example of data being filtered by user id number"
-                                 style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
-                        </div>
-                        <h3 style="margin-bottom: 10px; color: var(--text-main); font-size: 1.3rem;">DripFilter</h3>
-                        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
-                            An interactive data visualization and parsing interface. Features dynamic client-side
-                            filtering, multi-criteria sorting, and responsive conditional layout styling designed to
-                            make searching through complex datasets efficient and intuitive.
-                        </p>
-                    </div>
-                </div>
-
-                <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px var(--shadow);">
-                    <div style="background: var(--input-bg); border-bottom: 1px solid var(--border-color); padding: 10px 15px; font-size: 0.8rem; font-weight: bold; display: flex; justify-content: space-between; color: var(--text-muted); font-family: monospace;">
-                        <span>grade_quackulator_v2.exe</span>
-                        <span>[ - ▢ ✕ ]</span>
-                    </div>
-                    <div style="padding: 24px;">
-                        <div style="width: 100%; height: 180px; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid var(--border-color); margin-bottom: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                            <img src="assets/gradequackulator_results.png"
-                                 alt="Preview of grade Quack-u-lator after 10 assignments have been added to show weighted grade logic and grade goal calculator"
-                                 style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
-                        </div>
-                        <h3 style="margin-bottom: 10px; color: var(--text-main); font-size: 1.3rem;">Grade
-                            Quackulator</h3>
-                        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
-                            A responsive weighted grade calculator featuring a playful retro-warm aesthetic. Built with
-                            React state hooks to manage dynamic grade cards, handle error states for weights, and run a
-                            target-goal calculator that tells you exactly what score you need on your final. Made to
-                            be lightweight and simple so it doesn't make your videos lag on the school laptop.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section style="margin-top: 80px; padding: 30px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; display: flex; gap: 25px; align-items: center; flex-wrap: wrap; box-shadow: 0 4px 12px var(--shadow);">
-            <div style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--primary-accent); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <img src="assets/brainnotpinky.jpg" alt="Nicole" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
-            <div style="flex: 1; min-width: 250px;">
-                <h3 style="margin: 0 0 8px 0; color: var(--text-main); font-size: 1.2rem;">// System Operator:
-                    Nicole</h3>
-                <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;">
-                    Full-stack web software engineer focused on building robust backends and resilient system
-                    integrations.
-
-                    Crafting secure digital environments from a cozy corner somewhere with a cat curled up nearby.
-
-                    Lovingly called Moomer by her three children, she enjoys forgetting to water the dozens of
-                    houseplants she has, making her own bread and pasta from scratch, and listening to the sounds of
-                    Reddit stories read over Minecraft or Subway Surfers gameplay.
-
-                    She is a firm believer that the best code is clean as it is fly, well-documented, and written
-                    with care for the next person who will read it.
-                </p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 60px; font-family: monospace;">
-        <p>© 2026 SOFTSTACK STUDIOS. ALL RIGHTS RESERVED. I'M SO VERY FOR REAL, BUDDY.</p>
-    </footer>
-
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click',()=>{
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-            } else {
-                document.documentElement.setAttribute('data-theme','dark');
-            }
-        });
-    </script>
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    });
+</script>
 </body>
 </html>

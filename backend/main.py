@@ -6,46 +6,51 @@ from sqlalchemy.orm import Session
 import models
 from database import engine, get_db
 
-# This initializes your database and creates the onboarding.db file automatically
+# Automatically creates tables in onboarding.db on startup
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="SoftStack Onboarding API")
 
 ## --- CORS Middleware --- ##
-app.add_middleware(CORSMiddleware,
+app.add_middleware(
+    CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"])
+    allow_headers=["*"]
+)
+
 
 ## --- Pydantic Data Validation Schemas --- ##
 class ClientCreate(BaseModel):
     name: str = Field(..., min_length=2, max_length=50)
     company: Optional[str] = Field(None, max_length=100)
     email: EmailStr = Field(..., min_length=5, max_length=50)
-    phone: str = Field(None, max_length=20)
+    phone: Optional[str] = Field(None, max_length=20)
     preferred_contact_method: str = Field("Email", max_length=50)
 
 
 class BriefCreate(BaseModel):
-    business_summary: str = Field(..., max_length = 4000, description = "A high-level overview of the client's business model, values, and core operations.")
-    target_audience: str = Field(..., max_length = 1500, description = "Description of the ideal users, target market demographics, or core personas for this product.")
-    competitors: Optional[str] = Field(None, max_length = 1500, description = "Direct or indirect market competitors in the client's industry that we should analyze.")
-    discovery_source: Optional[str] = Field(None, max_length = 100, description = "Marketing attribution data indicating how the client found SoftStack Studios (e.g., Google, Referral, Twitter).")
-    primary_goal: str = Field(..., max_length = 1000, description = "The primary technical or business objective the client expects this project to solve.")
-    required_features: List[str] = Field(..., description = "A list of specific mandatory technical features or integrations requested (e.g., Stripe, Auth0, CMS).")
-    anti_features: Optional[List[str]] = Field(None, description = "An explicit list of UI elements, design patterns, or technical directions the client strongly dislikes.")
-    creative_energy: int = Field(3, ge = 1, le = 5, description = "A stylistic vibe rating from 1 (strictly corporate, safe, and conservative) to 5 (experimental, highly creative, and modern).")
-    accessibility_requirements: Optional[str] = Field(None, max_length = 1500, description = "Specific descriptions of user accessibility accommodations needed for the build.")
-    has_accessibility_priority: bool = Field(False, description = "A boolean flag indicating if the project requires strict legal WCAG/ADA compliance auditing.")
-    existing_assets: Optional[str] = Field(None, max_length = 1500, description = "Inventory notes on what the client already owns (e.g., current domain names, existing Figma files, hosting packages).")
-    technical_contact: Optional[str] = Field(None, max_length = 100, description = "Contact information for the client's internal developer or IT administrator, if applicable.")
-    timeline: str = Field(..., max_length = 200, description = "The client's desired development timeline window or strict drop-dead launch date.")
-    budget_range: str = Field(..., max_length = 100, description = "The financial tier or pricing bracket allocated by the client for the initial build phase.")
-    decision_makers: Optional[str] = Field(None, max_length = 500, description = "Who holds final sign-off authority?")
-    success_kpis: str = Field(..., max_length = 1500, description = "What metric defines success for this build?")
-    brand_asset_status: str = Field(..., max_length = 1000, description = "Are copy/logos ready or do they need production?")
-    maintenance_preference: Optional[str] = Field(None, max_length = 500, description = "Do they need post-launch support?")
+    business_summary: str = Field(..., max_length=4000, description="Overview of business model.")
+    target_audience: str = Field(..., max_length=1500, description="Description of ideal users/demographics.")
+    competitors: Optional[str] = Field(None, max_length=1500, description="Direct/indirect competitors.")
+    discovery_source: Optional[str] = Field(None, max_length=100, description="Marketing attribution data.")
+    primary_goal: str = Field(..., max_length=1000, description="Primary technical objective.")
+    required_features: List[str] = Field(..., description="Mandatory features or integrations requested.")
+    anti_features: Optional[List[str]] = Field(None, description="Explicit list of anti-patterns.")
+    creative_energy: int = Field(3, ge=1, le=5, description="Stylistic vibe rating from 1 to 5.")
+    accessibility_requirements: Optional[str] = Field(None, max_length=1500,
+                                                      description="Accessibility accommodations.")
+    has_accessibility_priority: bool = Field(False, description="Flag for strict WCAG compliance.")
+    existing_assets: Optional[str] = Field(None, max_length=1500, description="Inventory notes on existing assets.")
+    technical_contact: Optional[str] = Field(None, max_length=100, description="Internal developer/IT contact.")
+    timeline: str = Field(..., max_length=200, description="Desired timeline window.")
+    budget_range: str = Field(..., max_length=100, description="Financial tier or pricing bracket.")
+    decision_makers: Optional[str] = Field(None, max_length=500, description="Sign-off decision makers.")
+    success_kpis: str = Field(..., max_length=1500, description="Metrics defining success.")
+    brand_asset_status: str = Field(..., max_length=1000, description="Asset readiness status.")
+    maintenance_preference: Optional[str] = Field(None, max_length=500, description="Post-launch support needs.")
+
 
 class FullOnboardingSubmission(BaseModel):
     client: ClientCreate
@@ -67,9 +72,10 @@ class BriefDashboardResponse(BaseModel):
     primary_goal: str
     budget_range: str
     timeline: str
-    status: str
+    status: Optional[str] = "Received"
     creative_energy: int
     has_accessibility_priority: bool
+    required_features: Optional[List[str]] = None
     client: ClientResponse
     business_summary: str
     anti_features: Optional[List[str]] = None
@@ -85,12 +91,12 @@ class BriefDashboardResponse(BaseModel):
 
 
 ## --- The Endpoints --- ##
-## Endpoint 1 : Submit Onboarding Form ##
+
 @app.post("/api/v1/onboarding", status_code=status.HTTP_201_CREATED)
 def submit_onboarding_form(payload: FullOnboardingSubmission, db: Session = Depends(get_db)):
-    # Check if the client already exists
+    # Check if client exists
     existing_client = db.query(models.Client).filter(
-            models.Client.email == payload.client.email
+        models.Client.email == payload.client.email
     ).first()
 
     if not existing_client:
@@ -100,14 +106,13 @@ def submit_onboarding_form(payload: FullOnboardingSubmission, db: Session = Depe
             email=payload.client.email,
             phone=payload.client.phone,
             preferred_contact_method=payload.client.preferred_contact_method
-            )
+        )
         db.add(new_client)
         db.commit()
         db.refresh(new_client)
         client_id = new_client.id
     else:
         client_id = existing_client.id
-        # Track and sync any profile updates dynamically
         has_updates = False
         if payload.client.company and payload.client.company != existing_client.company:
             existing_client.company = payload.client.company
@@ -122,7 +127,7 @@ def submit_onboarding_form(payload: FullOnboardingSubmission, db: Session = Depe
         if has_updates:
             db.add(existing_client)
 
-    # Create the project brief linked to that client
+    # Create linked project brief
     new_brief = models.ProjectBrief(
         client_id=client_id,
         business_summary=payload.brief.business_summary,
@@ -139,10 +144,10 @@ def submit_onboarding_form(payload: FullOnboardingSubmission, db: Session = Depe
         technical_contact=payload.brief.technical_contact,
         timeline=payload.brief.timeline,
         budget_range=payload.brief.budget_range,
-        decision_makers = payload.brief.decision_makers,
-        success_kpis = payload.brief.success_kpis,
-        brand_asset_status = payload.brief.brand_asset_status,
-        maintenance_preference = payload.brief.maintenance_preference
+        decision_makers=payload.brief.decision_makers,
+        success_kpis=payload.brief.success_kpis,
+        brand_asset_status=payload.brief.brand_asset_status,
+        maintenance_preference=payload.brief.maintenance_preference
     )
 
     db.add(new_brief)
@@ -153,7 +158,7 @@ def submit_onboarding_form(payload: FullOnboardingSubmission, db: Session = Depe
         db.rollback()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Whoops! Database transaction failed: {str(e)}"
+            detail=f"Database transaction failed: {str(e)}"
         )
 
     return {
@@ -162,7 +167,6 @@ def submit_onboarding_form(payload: FullOnboardingSubmission, db: Session = Depe
     }
 
 
-## Endpoint 2 : Get All Briefs (Admin Dashboard)
 @app.get("/api/v1/briefs", response_model=List[BriefDashboardResponse], status_code=status.HTTP_200_OK)
 def get_all_briefs(db: Session = Depends(get_db)):
     """Fetches all submitted briefs along with their attached client profiles."""

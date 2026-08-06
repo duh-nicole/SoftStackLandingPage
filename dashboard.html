@@ -6,7 +6,7 @@
     <title>SoftStack Studios // Admin Pipeline</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Custom Dashboard Layout Tweaks that build on top of your styles.css */
+        /* Custom Dashboard Layout Tweaks */
         .dashboard-container {
             max-width: 1400px;
             margin: 40px auto;
@@ -43,7 +43,7 @@
             color: var(--primary-accent);
         }
 
-        /* Elegant Pipeline Data Table */
+        /* Pipeline Data Table */
         .table-wrapper {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -67,7 +67,7 @@
         }
 
         th, td {
-            padding: 16px 30px; /* Normalized padding for widescreen readability */
+            padding: 16px 30px;
             border-bottom: 1px solid var(--border-color);
             vertical-align: middle;
         }
@@ -102,7 +102,6 @@
             white-space: nowrap;
         }
 
-        /* Inline mini-tags for project properties */
         .feature-tag {
             display: inline-block;
             padding: 2px 8px;
@@ -116,7 +115,6 @@
             text-transform: capitalize;
         }
 
-        /* High-priority marker for WCAG compliance fields */
         .a11y-badge {
             display: inline-block;
             padding: 2px 8px;
@@ -159,7 +157,6 @@
             z-index: 1000;
         }
 
-        /* Modal Content Box */
         .modal-content {
             background-color: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -173,7 +170,6 @@
             overflow-y: auto;
         }
 
-        /* Modal Typography & Elements */
         .modal-content h2 {
             color: var(--primary-accent);
             margin-top: 0;
@@ -204,7 +200,6 @@
             white-space: pre-wrap;
         }
 
-        /* Close Button */
         .close-btn {
             position: absolute;
             top: 20px;
@@ -237,7 +232,7 @@
         </div>
         <div class="metric-card">
             <h3>Pipeline Value</h3>
-            <div class="value" id="pipelineValue">Active</div>
+            <div class="value" id="pipelineValue">$0</div>
         </div>
         <div class="metric-card">
             <h3>System Status</h3>
@@ -273,159 +268,9 @@
     </div>
 </main>
 
-<script>
-    function escapeHTML(str) {
-        if (typeof str !== 'string') return str;
-        return str.replace(/[&<>'"]/g,
-            tag=>({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                "'": '&#39;',
-                '"': '&quot;'
-            }[tag])
-        );
-    }
-
-    async function fetchPipelineData() {
-        const rowsContainer = document.getElementById('pipelineRows');
-        const totalCounter = document.getElementById('totalBriefs');
-
-        try {
-            // Call live FastAPI endpoint to read from the database
-            const response = await fetch('http://127.0.0.1:8000/api/v1/briefs');
-            if (!response.ok) throw new Error("Database network flatline");
-            const briefs = await response.json();
-
-            // Update the metrics card block count
-            totalCounter.textContent = briefs.length;
-
-            // Calculate total baseline value of the active pipeline
-            let totalValue = 0;
-            briefs.forEach(item=>{
-                const budget = item.budget_range || '';
-                if (budget.includes('$1k')) {
-                    totalValue += 1000;
-                } else if (budget.includes('$5k')) {
-                    totalValue += 5000;
-                } else if (budget.includes('$10k')) {
-                    totalValue += 10000;
-                }
-            });
-            document.getElementById('pipelineValue').textContent = `$${totalValue.toLocaleString()}`;
-
-            // Clear out placeholder loading text
-            rowsContainer.innerHTML = '';
-
-            if (briefs.length === 0) {
-                rowsContainer.innerHTML =
-                    `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No active project briefs found in the database.</td></tr>`;
-                return;
-            }
-
-            // Loop through every database record and generate a pristine table row
-            briefs.forEach(item=>{
-                const row = document.createElement('tr');
-                row.style.cursor = 'pointer';
-                row.addEventListener('click',()=>openInspectionModal(item));
-
-                // Sanitizing input strings before building our rows
-                const clientName = item.client?.name || item.name || 'Anonymous';
-                const clientCompany = item.client?.company || item.company;
-
-                const safeName = escapeHTML(clientName);
-                const safeCompany = clientCompany ?
-                                    ` <span style="color: var(--text-muted); font-size: 0.85rem; display:block;">${escapeHTML(
-                                        clientCompany)}</span>` : '';
-                const clientInfo = safeName + safeCompany;
-
-                const safeGoal = escapeHTML(item.primary_goal || 'Unspecified goal');
-                const safeBudget = escapeHTML(item.budget_range || 'TBD');
-                const safeTimeline = escapeHTML(item.timeline || 'TBD');
-
-                // Map the array of selected features into tiny clean UI tags
-                let featureTagsHTML = '';
-                const features = item.required_features || item.features;
-                if (Array.isArray(features)) {
-                    featureTagsHTML =
-                        features.map(feat=>`<span class="feature-tag">${escapeHTML(feat.replace('_',' '))}</span>`).
-                                 join('');
-                } else if (typeof features === 'string') {
-                    featureTagsHTML = features.split(',').map(feat=>`<span class="feature-tag">${escapeHTML(
-                        feat.trim().replace('_',' '))}</span>`).join('');
-                }
-
-                // Append high-contrast indicator tag if strict WCAG is requested
-                if (item.has_accessibility_priority || item.accessibility_priority) {
-                    featureTagsHTML += `<span class="a11y-badge">♿ WCAG Priority</span>`;
-                }
-
-                row.innerHTML = `
-                        <td><strong>${clientInfo}</strong></td>
-                        <td>${safeGoal}</td>
-                        <td><div style="max-width: 320px; display: flex; flex-wrap: wrap;">${featureTagsHTML ||
-                                                                                             '<span style="color: var(--text-muted); font-size: 0.85rem;">None</span>'}</div></td>
-                        <td><span style="color: var(--text-main); font-weight: 600;">${safeBudget}</span></td>
-                        <td>${safeTimeline}</td>
-                        <td><span class="badge">${escapeHTML(item.status || 'Received')}</span></td>
-                    `;
-                rowsContainer.appendChild(row);
-            });
-
-        } catch (error) {
-            console.error("Whoops! Dashboard Sync Error:",error);
-            rowsContainer.innerHTML =
-                `<tr><td colspan="6" style="text-align: center; color: var(--primary-accent);">Pipeline sync failed. Is your FastAPI service running?</td></tr>`;
-        }
-    }
-
-    // Run sync on initial page mount
-    document.addEventListener('DOMContentLoaded',fetchPipelineData);
-
-    // Wire up manual synchronization action button
-    document.getElementById('refreshBtn').addEventListener('click',fetchPipelineData);
-
-    function openInspectionModal(item) {
-        const modal = document.getElementById('inspectionModal');
-
-        // Handle nested object formats safely
-        const name = item.client?.name || item.name || 'Anonymous';
-        const company = item.client?.company || item.company;
-        const companyText = company ? ` (${company})` : '';
-
-        // Populate client context header
-        document.getElementById('modalClientTitle').textContent = `${name}${companyText} // Project Profile`;
-
-        // Inject dynamic texts with native mapping fields from JSON payloads
-        document.getElementById('modalTimeline').textContent = item.timeline || 'Unspecified';
-        document.getElementById('modalVibe').textContent = `${item.creative_energy || 3} / 5 Vibe`;
-        document.getElementById('modalSource').textContent = item.discovery_source || 'Direct Discovery / Unknown';
-
-        // Inject main dynamic texts with safety fallbacks
-        document.getElementById('modalSummary').textContent = item.business_summary || 'No overview provided.';
-
-        // Handle array structures safely
-        let antiFeaturesText = 'None noted!';
-        if (Array.isArray(item.anti_features)) {
-            antiFeaturesText = item.anti_features.join(', ');
-        } else if (typeof item.anti_features === 'string') {
-            antiFeaturesText = item.anti_features;
-        }
-        document.getElementById('modalAntiFeatures').textContent = antiFeaturesText;
-
-        // Handle accessibility accommodations matching the schema properties of the database
-        const accommodations = item.access_accommodations || item.accessibility_requirements ||
-                               'No specific accommodations flagged.';
-        document.getElementById('modalAccess').textContent = accommodations;
-
-        // Reveal the structural layout overlay flex block container
-        modal.style.display = 'flex';
-    }
-</script>
-
 <div id="inspectionModal" class="modal" style="display: none;">
     <div class="modal-content">
-        <span class="close-btn" onclick="document.getElementById('inspectionModal').style.display='none'">&times;</span>
+        <span class="close-btn" id="closeModalBtn">&times;</span>
         <h2 id="modalClientTitle"></h2>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid var(--border-color);">
@@ -448,5 +293,148 @@
         <p><strong>Accessibility Accommodations:</strong> <span id="modalAccess"></span></p>
     </div>
 </div>
+
+<script>
+    function escapeHTML(str) {
+        if (str === null || str === undefined) return '';
+        if (typeof str !== 'string') str = String(str);
+        return str.replace(/[&<>'"]/g,
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag])
+        );
+    }
+
+    async function fetchPipelineData() {
+        const rowsContainer = document.getElementById('pipelineRows');
+        const totalCounter = document.getElementById('totalBriefs');
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/v1/briefs');
+            if (!response.ok) throw new Error("Database network flatline");
+            const briefs = await response.json();
+
+            totalCounter.textContent = briefs.length;
+
+            let totalValue = 0;
+            briefs.forEach(item => {
+                const budget = item.budget_range || '';
+                if (budget.includes('$1k')) {
+                    totalValue += 1000;
+                } else if (budget.includes('$5k')) {
+                    totalValue += 5000;
+                } else if (budget.includes('$10k')) {
+                    totalValue += 10000;
+                }
+            });
+            document.getElementById('pipelineValue').textContent = `$${totalValue.toLocaleString()}`;
+
+            rowsContainer.innerHTML = '';
+
+            if (briefs.length === 0) {
+                rowsContainer.innerHTML =
+                    `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No active project briefs found in the database.</td></tr>`;
+                return;
+            }
+
+            briefs.forEach(item => {
+                const row = document.createElement('tr');
+                row.style.cursor = 'pointer';
+                row.addEventListener('click', () => openInspectionModal(item));
+
+                const clientName = item.client?.name || item.name || 'Anonymous';
+                const clientCompany = item.client?.company || item.company;
+
+                const safeName = escapeHTML(clientName);
+                const safeCompany = clientCompany ?
+                    ` <span style="color: var(--text-muted); font-size: 0.85rem; display:block;">${escapeHTML(clientCompany)}</span>` : '';
+                const clientInfo = safeName + safeCompany;
+
+                const safeGoal = escapeHTML(item.primary_goal || 'Unspecified goal');
+                const safeBudget = escapeHTML(item.budget_range || 'TBD');
+                const safeTimeline = escapeHTML(item.timeline || 'TBD');
+
+                let featureTagsHTML = '';
+                const features = item.required_features || item.features;
+                if (Array.isArray(features)) {
+                    featureTagsHTML = features.map(feat => `<span class="feature-tag">${escapeHTML(feat.replace(/_/g, ' '))}</span>`).join('');
+                } else if (typeof features === 'string') {
+                    featureTagsHTML = features.split(',').map(feat => `<span class="feature-tag">${escapeHTML(feat.trim().replace(/_/g, ' '))}</span>`).join('');
+                }
+
+                if (item.has_accessibility_priority || item.accessibility_priority) {
+                    featureTagsHTML += `<span class="a11y-badge">♿ WCAG Priority</span>`;
+                }
+
+                row.innerHTML = `
+                    <td><strong>${clientInfo}</strong></td>
+                    <td>${safeGoal}</td>
+                    <td><div style="max-width: 320px; display: flex; flex-wrap: wrap;">${featureTagsHTML || '<span style="color: var(--text-muted); font-size: 0.85rem;">None</span>'}</div></td>
+                    <td><span style="color: var(--text-main); font-weight: 600;">${safeBudget}</span></td>
+                    <td>${safeTimeline}</td>
+                    <td><span class="badge">${escapeHTML(item.status || 'Received')}</span></td>
+                `;
+                rowsContainer.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error("Dashboard Sync Error:", error);
+            rowsContainer.innerHTML =
+                `<tr><td colspan="6" style="text-align: center; color: var(--primary-accent);">Pipeline sync failed. Is your FastAPI service running?</td></tr>`;
+        }
+    }
+
+    // Modal Interaction Handlers
+    const modal = document.getElementById('inspectionModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    closeModalBtn.addEventListener('click', closeModal);
+
+    // Close when clicking overlay backdrop
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Close on Escape key press
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+    function openInspectionModal(item) {
+        const name = item.client?.name || item.name || 'Anonymous';
+        const company = item.client?.company || item.company;
+        const companyText = company ? ` (${company})` : '';
+
+        document.getElementById('modalClientTitle').textContent = `${name}${companyText} // Project Profile`;
+        document.getElementById('modalTimeline').textContent = item.timeline || 'Unspecified';
+        document.getElementById('modalVibe').textContent = `${item.creative_energy || 3} / 5 Vibe`;
+        document.getElementById('modalSource').textContent = item.discovery_source || 'Direct Discovery / Unknown';
+        document.getElementById('modalSummary').textContent = item.business_summary || 'No overview provided.';
+
+        let antiFeaturesText = 'None noted!';
+        if (Array.isArray(item.anti_features)) {
+            antiFeaturesText = item.anti_features.join(', ');
+        } else if (typeof item.anti_features === 'string') {
+            antiFeaturesText = item.anti_features;
+        }
+        document.getElementById('modalAntiFeatures').textContent = antiFeaturesText;
+
+        const accommodations = item.access_accommodations || item.accessibility_requirements || 'No specific accommodations flagged.';
+        document.getElementById('modalAccess').textContent = accommodations;
+
+        modal.style.display = 'flex';
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchPipelineData);
+    document.getElementById('refreshBtn').addEventListener('click', fetchPipelineData);
+</script>
 </body>
 </html>

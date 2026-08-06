@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, JSON, Boolean
 from sqlalchemy.orm import relationship
-from datetime import datetime
+from sqlalchemy.sql import func
 from database import Base
 
 
@@ -13,7 +13,7 @@ class Client(Base):
     email = Column(String(150), unique=True, nullable=False, index=True)
     phone = Column(String(20), nullable=True)
     preferred_contact_method = Column(String(50), default="Email")
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # One-to-many relationship linking back to the project briefs
     briefs = relationship("ProjectBrief", back_populates="client", cascade="all, delete-orphan")
@@ -41,7 +41,7 @@ class ProjectBrief(Base):
     creative_energy = Column(Integer, default=3)
     anti_features = Column(JSON, nullable=True)
 
-    # 🌟 Bucket 3.5: Strategic Evaluation Questions (NEW)
+    # Bucket 3.5: Strategic Evaluation Questions
     decision_makers = Column(String(500), nullable=True)
     success_kpis = Column(Text, nullable=False)
     brand_asset_status = Column(Text, nullable=False)
@@ -51,7 +51,7 @@ class ProjectBrief(Base):
     timeline = Column(String(200), nullable=False)
     budget_range = Column(String(100), nullable=False)
     status = Column(String(50), default="Brief Submitted")
-    submitted_at = Column(DateTime, default=datetime.utcnow)
+    submitted_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationship linking back to the parent client details
     client = relationship("Client", back_populates="briefs")
