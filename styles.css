@@ -52,10 +52,36 @@ body {
     margin: 0 auto;
 }
 
+/* Ensure header navigation buttons match theme toggle height & styling */
 .header-nav {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+}
+
+.header-nav .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px var(--shadow);
+    height: 38px; /* Matching height */
+}
+
+.header-nav .nav-btn:hover {
+    transform: translateY(-1px);
+    border-color: var(--primary-accent);
+}
+
+.theme-toggle-btn {
+    height: 38px; /* Standardize toggle button height */
 }
 
 .nav-btn {
@@ -156,13 +182,26 @@ body {
     margin: 0 auto 30px auto;
 }
 
+/* Hero CTA Banner Tweaks */
 .cta-btn {
-    text-decoration: none;
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 1rem;
-    font-weight: bold;
-    width: auto;
+    margin-top: 20px;
+    max-width: 650px;
+    text-align: center;
+    line-height: 1.5;
+    border-radius: 12px;
+    background-color: var(--primary-accent);
+    color: #ffffff;
+    box-shadow: 0 8px 24px var(--shadow);
+}
+
+[data-theme="dark"] .hero-section .cta-btn {
+    color: #1c121e;
+    background-color: var(--text-main);
+}
+
+[data-theme="dark"] .hero-section .cta-btn:hover {
+    background-color: var(--primary-accent);
+    color: #ffffff;
 }
 
 /* --- Portfolio & Project Grid --- */
