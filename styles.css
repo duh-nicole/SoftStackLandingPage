@@ -34,6 +34,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg-canvas);
     color: var(--text-main);
@@ -77,11 +81,91 @@ body {
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.5px;
+    text-decoration: none;
+    color: var(--text-main);
 }
 
 .logo span {
     color: var(--primary-accent);
     font-weight: 300;
+}
+
+.nav-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-accent);
+    background-color: var(--input-bg);
+}
+
+/* Dropdown Container */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-dropdown-btn {
+    background-color: var(--primary-accent);
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-dropdown-btn:hover {
+    background-color: var(--secondary-accent);
+}
+
+[data-theme="dark"] .nav-dropdown-btn:hover {
+    color: #25161b;
+}
+
+/* Dropdown Menu Box */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 8px;
+    background-color: var(--bg-surface);
+    min-width: 200px;
+    box-shadow: 0 8px 24px var(--shadow);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.dropdown-item {
+    color: var(--text-main);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--input-bg);
+    color: var(--primary-accent);
+}
+
+/* Toggle Dropdown on Hover & Focus */
+.nav-dropdown:hover .dropdown-content,
+.nav-dropdown:focus-within .dropdown-content {
+    display: block;
 }
 
 .theme-toggle-btn {
@@ -409,6 +493,7 @@ a:focus-visible {
     transform: translateY(0);
 }
 
+/* --- Mobile Queries (< 600px) --- */
 @media (max-width: 600px) {
     .app-header {
         padding: 16px 20px;
@@ -430,5 +515,116 @@ a:focus-visible {
         width: 100%;
         padding: 14px 20px;
         font-size: 0.95rem;
+    }
+}
+
+/* --- Contact / Ways to Reach Me Section --- */
+.contact-section {
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.contact-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.contact-intro {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.contact-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.method-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.method-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-link {
+    color: var(--primary-accent);
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: var(--secondary-accent);
+}
+
+
+/* --- Mobile & Touch Accessibility Tweaks (< 768px) --- */
+@media (max-width: 768px) {
+    /* Touch Target Sizing (WCAG Minimum 44x44px) */
+    .nav-dropdown-btn,
+    .refresh-btn,
+    .dropdown-item,
+    .theme-toggle-btn {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dropdown-content {
+        position: fixed;
+        left: 20px;
+        right: 20px;
+        top: auto;
+        width: auto;
+    }
+
+    /* Modal Touch Optimizations */
+    .modal-content {
+        width: 92%;
+        padding: 20px;
+        max-height: 85vh;
+        border-radius: 12px;
+    }
+
+    .close-btn {
+        top: 12px;
+        right: 16px;
+        padding: 10px;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Scrollable Data Table on Mobile */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    th, td {
+        padding: 12px 16px;
+        white-space: nowrap;
+    }
+
+    /* Stack Metrics vertically */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 }

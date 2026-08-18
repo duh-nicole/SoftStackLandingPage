@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,11 @@
 <body>
 
 <header class="app-header">
-    <div class="logo">SoftStack<span>Studios</span></div>
-    <button class="theme-toggle-btn" id="themeToggle">Toggle Theme</button>
+    <a href="index.html" class="logo">SoftStack<span>Studios</span></a>
+    <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme"
+            aria-pressed="true">
+        Toggle Theme
+    </button>
 </header>
 
 <main class="form-container">
@@ -96,9 +99,15 @@
                 </div>
 
                 <div class="input-group">
-                    <label for="creativeEnergy">Creative Energy / Style Vibe (1 = Corporate Clean, 5 = Cyberpunk
-                        Chaos)</label>
-                    <input type="range" id="creativeEnergy" name="creative_energy" min="1" max="5" value="3">
+                    <label for="creativeEnergy">
+                        Creative Energy / Style Vibe: <span id="vibeValue">3 - Balanced Mix</span>
+                    </label>
+                    <input type="range" id="creativeEnergy" name="creative_energy" min="1" max="5" value="3"
+                           aria-describedby="vibeValue">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.8; margin-top: 4px;">
+                        <span>1 = Corporate Clean</span>
+                        <span>5 = Cyberpunk Chaos</span>
+                    </div>
                 </div>
 
                 <div class="input-group">
@@ -117,8 +126,7 @@
 
                 <div class="input-group">
                     <label for="accessAccommodations">Are there any specific accessibility accommodations your users
-                        require? It's free, don't worry. This may be an optional field to fill out but it doesn't cost
-                        anything extra to accommodate everybody.</label>
+                        require? It's free, don't worry. </label>
                     <textarea id="accessAccommodations" name="access_accommodations" rows="2" maxlength="2000"
                               placeholder="e.g., Strict WCAG screen-reader compliance, large high-contrast visual elements..."></textarea>
                 </div>
@@ -128,14 +136,16 @@
                     <div class="checkbox-grid"
                          style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;"
                          role="group" aria-labelledby="featuresGroupLabel">
-                        <label for="featAuth"><input type="checkbox" id="featAuth" name="features" value="user_auth">
+                        <label for="featAuth"><input type="checkbox" id="featAuth" name="feature_user_auth" value="Yes">
                             User Authentication / Logins</label>
-                        <label for="featPay"><input type="checkbox" id="featPay" name="features"
-                                                    value="payment_processing"> Payment Gateway (Stripe)</label>
-                        <label for="featDash"><input type="checkbox" id="featDash" name="features" value="dashboard">
+                        <label for="featPay"><input type="checkbox" id="featPay" name="feature_payment_processing"
+                                                    value="Yes">
+                            Payment Gateway (Stripe)</label>
+                        <label for="featDash"><input type="checkbox" id="featDash" name="feature_dashboard" value="Yes">
                             Admin Dashboard & Analytics</label>
-                        <label for="featApi"><input type="checkbox" id="featApi" name="features"
-                                                    value="api_integration"> Third-Party API Integrations</label>
+                        <label for="featApi"><input type="checkbox" id="featApi" name="feature_api_integration"
+                                                    value="Yes">
+                            Third-Party API Integrations</label>
                     </div>
                 </div>
             </section>
@@ -190,7 +200,7 @@
             </section>
 
             <div class="form-actions">
-                <button type="submit" class="submit-btn">Initialize Project Brief</button>
+                <button type="submit" class="submit-btn" id="submitBtn">Initialize Project Brief</button>
             </div>
 
         </form>
@@ -201,19 +211,42 @@
     // --- Theme Toggle --- //
     const toggleButton = document.getElementById('themeToggle');
     toggleButton.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
             document.documentElement.removeAttribute('data-theme');
+            toggleButton.setAttribute('aria-pressed', 'false');
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
+            toggleButton.setAttribute('aria-pressed', 'true');
         }
+    });
+
+    // --- Dynamic Slider Value Output --- //
+    const energyInput = document.getElementById('creativeEnergy');
+    const vibeOutput = document.getElementById('vibeValue');
+    const vibeLabels = {
+        '1': '1 - Corporate Clean',
+        '2': '2 - Modern Minimal',
+        '3': '3 - Balanced Mix',
+        '4': '4 - Playful Retro',
+        '5': '5 - Cyberpunk Chaos'
+    };
+
+    energyInput.addEventListener('input', (e) => {
+        vibeOutput.textContent = vibeLabels[e.target.value] || e.target.value;
     });
 
     // --- Web3Forms Submission Bridge --- //
     const onboardingForm = document.getElementById('onboardingForm');
+    const submitBtn = document.getElementById('submitBtn');
 
     onboardingForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+
+        // Prevent double submission
+        submitBtn.disabled = true;
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = "Transmitting Brief...";
 
         const formData = new FormData(onboardingForm);
 
@@ -228,14 +261,20 @@
             if (data.success) {
                 alert(`✨ Your project brief has been tucked safely into our queue. We're pouring a fresh cup of coffee and looking over your ideas right now.`);
                 onboardingForm.reset();
+                vibeOutput.textContent = vibeLabels['3'];
             } else {
                 alert(`☕ Ope, just a tiny hiccup!: ${data.message || 'Please check your fields.'}`);
             }
         } catch (error) {
             console.error("Pipeline Connection Error:", error);
             alert("Could not connect to the submission server. Please check your internet connection.");
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
         }
     });
 </script>
 </body>
 </html>
+
+

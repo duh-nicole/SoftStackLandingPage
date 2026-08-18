@@ -3,39 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoftStack Studios // Terminal</title>
+    <title>SoftStack Studios</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="app-header">
-    <div class="logo">SoftStack<span>Studios</span></div>
-    <div class="header-nav">
-        <a href="onboarding.html" class="submit-btn nav-btn">Run Onboarding.exe</a>
-        <select class="theme-select" id="themeSelect" aria-label="Pick a theme">
-            <option value="dark">Dark</option>
-            <option value="light">Light</option>
-   </div>
+    <a href="#" class="logo">SoftStack<span>Studios</span></a>
+
+    <nav class="header-nav" aria-label="Main Navigation">
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
+        <a href="#operator" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+
+        <!-- Onboarding & Services Dropdown -->
+        <div class="nav-dropdown">
+            <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+                Work With Us ▾
+            </button>
+            <div class="dropdown-content">
+                <a href="onboarding.html" class="dropdown-item">Project Brief</a>
+                <a href="#services" class="dropdown-item">Services & Info</a>
+            </div>
+        </div>
+
+        <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme"
+                aria-pressed="true">
+            Theme
+        </button>
+    </nav>
 </header>
 
+<!-- Main Content -->
 <main class="form-container landing-main">
 
+    <!-- Hero Section -->
     <section class="form-intro hero-section">
-        <h1 class="hero-title">Cozy Vibes. Clean Code.</h1>
+        <h1 class="hero-title">Accessible Web Builds & Full-Stack Engineering</h1>
         <p class="hero-subtitle">
-            Welcome to SoftStack Studios. I build secure backend pipelines and fully accessible digital frameworks
-            wrapped in a cozy retro aesthetic.
+            Welcome to SoftStack Studios. I build accessible, WCAG-compliant web apps and secure backend systems—wrapped
+            in a cozy retro aesthetic.
         </p>
         <a href="onboarding.html" class="submit-btn cta-btn">
-            Click to do yourself a favor and get a little info. No pressure. Just click, no worries. Be
-            happy.
+            Press Start
         </a>
     </section>
 
-    <section class="portfolio-section">
-        <h2 class="section-title">
-            See My Previous Works
-        </h2>
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <h2 class="section-title">// Core Services</h2>
+        <div class="services-grid">
+
+            <div class="service-card">
+                <h3>Accessibility Audits & WCAG Remediation</h3>
+                <p>Comprehensive audits of existing sites to identify compliance gaps, keyboard navigation issues, and
+                    screen-reader barriers. Get actionable fixes to protect your business and reach every user.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Accessible Frontend Development</h3>
+                <p>Custom, responsive websites built using semantic HTML, clean CSS, and accessible UI patterns from the
+                    ground up.</p>
+            </div>
+
+            <div class="service-card">
+                <h3>Full-Stack & Backend Systems</h3>
+                <p>Robust backend architecture, custom API development, and secure data pipelines designed for
+                    reliability and clean maintainability.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolio">
+        <h2 class="section-title">See My Previous Works</h2>
 
         <div class="project-grid">
 
@@ -54,7 +97,7 @@
                     <p class="card-desc">
                         An interactive data visualization and parsing interface. Features dynamic client-side
                         filtering, multi-criteria sorting, and responsive conditional layout styling designed to
-                        make searching through complex datasets efficient and intuitive.
+                        make searching through complex datasets quick and convenient.
                     </p>
                 </div>
             </article>
@@ -72,7 +115,7 @@
                     </div>
                     <h3 class="card-title">Grade Quackulator</h3>
                     <p class="card-desc">
-                        A responsive weighted grade calculator featuring a playful retro-warm aesthetic. Built with
+                        A responsive weighted grade calculator featuring a fun retro feel and responsiveness. Built with
                         React state hooks to manage dynamic grade cards, handle error states for weights, and run a
                         target-goal calculator that tells you exactly what score you need on your final.
                     </p>
@@ -82,9 +125,12 @@
         </div>
     </section>
 
-    <section class="operator-profile">
+    <!-- Operator Profile Section -->
+    <section class="operator-profile" id="operator">
         <div class="avatar-frame">
-            <img src="assets/brainnotpinky.jpg" alt="Profile avatar for Nicole" class="avatar-img">
+            <img src="assets/brainnotpinky.jpg"
+                 alt="Profile avatar for Nicole, a woman in her mid thirties with dark brown hair, brown eyes, and a soft smile."
+                 class="avatar-img">
         </div>
         <div class="operator-info">
             <h3 class="operator-title">// System Operator: Nicole</h3>
@@ -101,20 +147,48 @@
         </div>
     </section>
 
+    <!-- Ways to Reach Me Section -->
+    <section class="contact-section" id="contact">
+        <h2 class="section-title">// Establish Connection</h2>
+        <div class="contact-card">
+            <p class="contact-intro">
+                Ready to scope out a project, request an accessibility audit, or just say hello?
+            </p>
+            <div class="contact-methods">
+                <div class="method-item">
+                    <span class="method-label">Direct Email:</span>
+                    <a href="mailto:nicole@softstack.studio" class="contact-link">
+                        nicole@softstack.studio
+                    </a>
+                </div>
+                <div class="method-item">
+                    <span class="method-label">Project Brief:</span>
+                    <a href="onboarding.html" class="contact-link">
+                        Launch Project Brief →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </main>
 
+<!-- Footer -->
 <footer class="app-footer">
     <p>© 2026 SOFTSTACK STUDIOS. ALL RIGHTS RESERVED. I'M SO VERY FOR REAL, BUDDY.</p>
 </footer>
 
+<!-- Theme Toggle Script -->
 <script>
     const themeToggle = document.getElementById('themeToggle');
     themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
             document.documentElement.removeAttribute('data-theme');
+            themeToggle.setAttribute('aria-pressed', 'false');
         } else {
             document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.setAttribute('aria-pressed', 'true');
         }
     });
 </script>

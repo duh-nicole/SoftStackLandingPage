@@ -1,6 +1,4 @@
-# Test your FastAPI endpoints
 ### Test Case 1: Submit a Full Onboarding Form (Success)
-### Submit a Comprehensive Onboarding Form Request
 POST http://127.0.0.1:8000/api/v1/onboarding
 Content-Type: application/json
 
@@ -9,17 +7,30 @@ Content-Type: application/json
     "name": "Jane Doe",
     "company": "Acme Corp",
     "email": "jane@example.com",
-    "phone": "555-0199"
+    "phone": "555-0199",
+    "preferred_contact_method": "Email"
   },
   "brief": {
     "business_summary": "A boutique e-commerce shop specializing in handmade pottery.",
     "target_audience": "Local art collectors and home decor enthusiasts aged 25-50.",
     "competitors": "Etsy shops, local boutique stores",
     "primary_goal": "Build a lightning-fast, highly accessible online store.",
-    "required_features": ["shopping_cart", "stripe_payments", "admin_dashboard"],
-    "accessibility_requirements": "Strict WCAG 2.1 AA compliance, screen-reader optimized elements, high-contrast layouts.",
+    "required_features": [
+      "shopping_cart",
+      "stripe_payments",
+      "admin_dashboard"
+    ],
+    "anti_features": [
+      "popups",
+      "auto-playing audio"
+    ],
+    "creative_energy": 4,
+    "accessibility_requirements": "Strict WCAG 2.1 AA compliance, screen-reader optimized elements.",
+    "has_accessibility_priority": true,
     "timeline": "6-8 weeks",
-    "budget_range": "$3,000 - $5,000"
+    "budget_range": "$5k-$10k",
+    "success_kpis": "Increase online sales by 30% in Q3 and achieve zero WCAG violations.",
+    "brand_asset_status": "Logos, color palette, and high-res product photos are ready."
   }
 }
 
@@ -34,17 +45,19 @@ Content-Type: application/json
     "phone": "555-0000"
   },
   "brief": {
-    "business_summary": "Testing Pydantic validation.",
+    "business_summary": "Testing Pydantic validation error handling.",
     "target_audience": "Developers",
     "primary_goal": "Trigger a 422 Unprocessable Entity error",
-    "required_features": ["test"],
+    "required_features": [
+      "test"
+    ],
     "timeline": "Immediate",
-    "budget_range": "N/A"
+    "budget_range": "$1k-$5k",
+    "success_kpis": "Trigger validation failure.",
+    "brand_asset_status": "N/A"
   }
 }
 
 ### Test Case 3: Fetch All Project Briefs
 GET http://127.0.0.1:8000/api/v1/briefs
 Accept: application/json
-
-
