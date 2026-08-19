@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
 /* --- Global Theme Variable Tokens --- */
 :root {
     /* Light Mode Config (Palette 1) */
+    color-scheme: light;
     --bg-canvas: #eeeeee;
     --bg-surface: #ffffff;
     --text-main: #2b2b28;
@@ -16,6 +18,7 @@
 
 [data-theme="dark"] {
     /* Dark Mode Switch (Palette 2) */
+    color-scheme: dark;
     --bg-canvas: #1c121e;
     --bg-surface: #2d1f30;
     --text-main: #f3cba5;
@@ -335,8 +338,9 @@ body {
 }
 
 .preview-frame {
+    aspect-ratio: 16 / 9;
     width: 100%;
-    height: 180px;
+    height: auto;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     border: 1px solid var(--border-color);
@@ -346,6 +350,11 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.avatar-frame {
+    aspect-ratio: 1 / 1;
+}
+
 
 .preview-img {
     width: 100%;
