@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SoftStack Studios client intake form. Submit your project requirements, target timeline, and budget.">
-    <title>SoftStack Studios // Client Intake</title>
+    <meta property="og:title" content="SoftStack Studios // Client Intake">
+    <meta property="og:description" content="Submit your project requirements, target timeline, and budget.">
+    <meta property="og:type" content="website">
+    
+    <title>SoftStack Studios Intake Info</title>
     
     <link rel="preconnect" href="https://api.web3forms.com">
     <link rel="stylesheet" href="styles.css">
@@ -44,21 +48,21 @@
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="clientName">First and Last Name</label>
-                        <input type="text" id="clientName" name="name" required maxlength="50"
+                        <input type="text" id="clientName" name="name" autocomplete="name" required maxlength="50"
                                placeholder="Amanda Bandana">
                     </div>
                     <div class="input-group">
                         <label for="clientCompany">Company Name</label>
-                        <input type="text" id="clientCompany" name="company" maxlength="100"
+                        <input type="text" id="clientCompany" name="company" autocomplete="organization" maxlength="100"
                                placeholder="The Most Literal Housekeeper at Your Service, LLC">
                     </div>
                     <div class="input-group">
                         <label for="clientEmail">Email Address</label>
-                        <input type="email" id="clientEmail" name="email" required placeholder="ama_bda@company.com">
+                        <input type="email" id="clientEmail" name="email" autocomplete="email" required placeholder="ama_bda@company.com">
                     </div>
                     <div class="input-group">
                         <label for="clientPhone">Phone Number</label>
-                        <input type="tel" id="clientPhone" name="phone" maxlength="20" required
+                        <input type="tel" id="clientPhone" name="phone" autocomplete="tel" maxlength="20" required
                                placeholder="402-555-0123">
                     </div>
                     <div class="input-group">
