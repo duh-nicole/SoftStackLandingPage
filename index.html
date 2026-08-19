@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoftStack Studios</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2280%22>ʕ•ᴥ•ʔ</text></svg>">
 </head>
 <body>
 
@@ -18,16 +20,6 @@
         <a href="#contact" class="nav-link">Contact</a>
 
         <!-- Onboarding & Services Dropdown -->
-        <div class="nav-dropdown">
-            <button class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
-                Work With Us ▾
-            </button>
-            <div class="dropdown-content">
-                <a href="onboarding.html" class="dropdown-item">Project Brief</a>
-                <a href="#services" class="dropdown-item">Services & Info</a>
-            </div>
-        </div>
-
         <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme"
                 aria-pressed="true">
             Theme
@@ -39,46 +31,42 @@
 <main class="form-container landing-main">
 
     <!-- Hero Section -->
-    <section class="form-intro hero-section">
-        <h1 class="hero-title">Accessible Web Builds & Full-Stack Engineering</h1>
+    <section id="hero" class="hero-section">
+        <h1 class="hero-title">Accessible Web Builds &amp; Full–Stack Engineering</h1>
         <p class="hero-subtitle">
-            Welcome to SoftStack Studios. I build accessible, WCAG-compliant web apps and secure backend systems—wrapped
-            in a cozy retro aesthetic.
+            Welcome to SoftStack Studios. I build accessible, WCAG-compliant web apps
+            and secure backend systems—wrapped in a cozy retro aesthetic.
         </p>
-        <a href="onboarding.html" class="submit-btn cta-btn">
-            Press Start
-        </a>
     </section>
 
     <!-- Services Section -->
-    <section class="services-section" id="services">
-        <h2 class="section-title">// Core Services</h2>
-        <div class="services-grid">
+    <section id="services" class="services-section">
+        <h2>// CORE SERVICES</h2>
+        <hr>
 
-            <div class="service-card">
-                <h3>Accessibility Audits & WCAG Remediation</h3>
-                <p>Comprehensive audits of existing sites to identify compliance gaps, keyboard navigation issues, and
-                    screen-reader barriers. Get actionable fixes to protect your business and reach every user.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>Accessible Frontend Development</h3>
-                <p>Custom, responsive websites built using semantic HTML, clean CSS, and accessible UI patterns from the
-                    ground up.</p>
-            </div>
-
-            <div class="service-card">
-                <h3>Full-Stack & Backend Systems</h3>
-                <p>Robust backend architecture, custom API development, and secure data pipelines designed for
-                    reliability and clean maintainability.</p>
-            </div>
-
+        <div class="service-item">
+            <h3>Accessibility Audits &amp; WCAG Remediation</h3>
+            <p>Comprehensive audits of existing sites to identify compliance gaps, keyboard navigation issues, and
+                screen-reader barriers. Get actionable fixes to protect your business and reach every user.</p>
         </div>
-    </section>
+
+        <div class="service-item">
+            <h3>Accessible Frontend Development</h3>
+            <p>Custom, responsive websites built using semantic HTML, clean CSS, and accessible UI patterns from the
+                ground up.</p>
+        </div>
+
+        <div class="service-item">
+            <h3>Full-Stack &amp; Backend Systems</h3>
+            <p>Robust backend architecture, custom API development, and secure data pipelines designed for reliability
+                and clean maintainability.</p>
+        </div>
+
+        <a href="#contact" class="service-link">Start an Onboarding Brief &rarr;</a>    </section>
 
     <!-- Portfolio Section -->
     <section class="portfolio-section" id="portfolio">
-        <h2 class="section-title">See My Previous Works</h2>
+        <h2 class="section-title">// PORTFOLIO</h2>
 
         <div class="project-grid">
 

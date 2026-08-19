@@ -127,7 +127,7 @@ body {
     background-color: var(--secondary-accent);
 }
 
-[data-theme="dark"] .nav-dropdown-btn:hover {
+[data-theme="dark"].nav-dropdown-btn:hover {
     color: #25161b;
 }
 
@@ -233,8 +233,9 @@ body {
 /* --- Hero Section Styles --- */
 .hero-section {
     text-align: center;
-    margin-bottom: 60px;
-    border-bottom: none;
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero-title {
@@ -249,12 +250,20 @@ body {
 }
 
 .cta-btn {
-    text-decoration: none;
     display: inline-block;
-    padding: 15px 30px;
-    font-size: 1rem;
-    font-weight: bold;
     width: auto;
+    min-width: 180px;
+    padding: 0.85rem 2rem;
+    margin-top: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
 }
 
 /* --- Portfolio & Project Grid --- */
@@ -284,6 +293,29 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px var(--shadow);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease;
+    will-change: transform;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+    transform: translateY(-6px) scale(1.02); /* Slight lift and slight expand */
+    box-shadow: 0 12px 28px var(--shadow);
+    border-color: var(--primary-accent);
+}
+
+/* Screen Reader / Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .project-card {
+        transition: none;
+    }
+
+    .project-card:hover,
+    .project-card:focus-within {
+        transform: none; /* Respects user motion sensitivity settings */
+    }
 }
 
 .card-window-header {
@@ -518,6 +550,41 @@ a:focus-visible {
     }
 }
 
+/* --- Service Action Link --- */
+.service-item {
+    margin-bottom: 24px;
+}
+
+.service-item h3 {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.service-item p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.service-link {
+    display: inline-block;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-accent);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.service-link:hover {
+    color: var(--secondary-accent);
+    transform: translateX(4px); /* Subtle shift to the right on hover */
+
+    text-decoration: underline;
+}
+
+
 /* --- Contact / Ways to Reach Me Section --- */
 .contact-section {
     margin-top: 60px;
@@ -610,6 +677,16 @@ a:focus-visible {
         align-items: center;
         justify-content: center;
     }
+
+
+    /* --- Checkbox Grid Layout --- */
+    .checkbox-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+    }
+
 
     /* Scrollable Data Table on Mobile */
     .table-wrapper {
