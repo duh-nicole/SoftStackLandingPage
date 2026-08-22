@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoftStack Studios</title>
 
-<!-- PASTE YOUR META TAGS HERE -->
+<!-- THESE ARE THE META SEO TAGS -->
     <!-- Primary Meta Tags -->
     <meta name="title" content="SoftStack Studios | Accessible Web Builds & Full-Stack Engineering">
     <meta name="description" content="Custom web design, WCAG-compliant accessibility audits, accessible frontend development, and robust full-stack backend systems by Nicole.">
@@ -26,7 +26,6 @@
     <meta name="twitter:title" content="SoftStack Studios | Accessible Web Builds & Full-Stack Engineering">
     <meta name="twitter:description" content="Custom web design, WCAG-compliant accessibility audits, accessible frontend development, and robust full-stack backend systems by Nicole.">
     <meta name="twitter:image" content="https://softstack.studio/bear-preview.svg">
-    <!-- END META TAGS -->
 
     
     <link rel="stylesheet" href="styles.css">
@@ -34,8 +33,11 @@
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2280%22>ʕ•ᴥ•ʔ</text></svg>">
 </head>
 <body>
+
+<!-- Skip Link -WCAG -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
+<!-- Menu -->
 <header class="app-header">
     <a href="#" class="logo">SoftStack<span>Studios</span></a>
     <nav class="header-nav" aria-label="Main Navigation">
@@ -47,7 +49,7 @@
         <!-- Onboarding & Services Dropdown -->
         <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme"
                 aria-pressed="true">
-            Theme
+            Light/Dark Mode
         </button>
     </nav>
 </header>
@@ -93,8 +95,10 @@
     <section class="portfolio-section" id="portfolio">
         <h2 class="section-title">// PORTFOLIO</h2>
 
+        <!-- Putting the portfolio in a grid so its pretty -->
         <div class="project-grid">
-
+            
+            <!-- Drip Filter -->
             <article class="project-card">
                 <div class="card-window-header">
                     <span>drip_filter_dashboard.sys</span>
@@ -105,6 +109,7 @@
                         <img src="assets/dripfilter.png"
                              alt="Preview of drip Filter dashboard interface showing user data filtered by ID number"
                              class="preview-img">
+                    </a>
                     </div>
                     <h3 class="card-title">DripFilter</h3>
                     <p class="card-desc">
@@ -115,16 +120,22 @@
                 </div>
             </article>
 
+
+            <!-- Grade Quackulator -->
             <article class="project-card">
                 <div class="card-window-header">
                     <span>grade_quackulator_v2.exe</span>
                     <span aria-hidden="true">[ - ▢ ✕ ]</span>
-                </div>
                 <div class="card-body">
                     <div class="preview-frame">
-                        <img src="assets/gradequackulator_results.png"
-                             alt="Preview of grade Quack-u-lator after 10 assignments have been added showing weighted grade logic"
-                             class="preview-img">
+                        <a href="https://github.com/duh-nicole/grade-quackulator" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           aria-label="View Grade Quackulator repository on GitHub (opens in new tab)">
+                            <img src="assets/gradequackulator_results.png"
+                                 alt="Interface preview of Grade Quackulator showing weighted grade inputs and calculated target goals."
+                                 class="preview-img">
+                        </a>
                     </div>
                     <h3 class="card-title">Grade Quackulator</h3>
                     <p class="card-desc">
