@@ -217,7 +217,7 @@ body {
 
 .form-intro {
     margin-bottom: 40px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px dashed var(--border-color);
     padding-bottom: 20px;
 }
 
@@ -317,7 +317,7 @@ body {
 
     .project-card:hover,
     .project-card:focus-within {
-        transform: none; /* Respects user motion sensitivity settings */
+        transform: none;
     }
 }
 
@@ -597,7 +597,7 @@ a:focus-visible {
 
 .service-link:hover {
     color: var(--secondary-accent);
-    transform: translateX(4px); /* Subtle shift to the right on hover */
+    transform: translateX(4px);
 
     text-decoration: underline;
 }
