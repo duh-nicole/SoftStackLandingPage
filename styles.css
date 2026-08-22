@@ -251,6 +251,17 @@ body {
     font-size: 1.05rem;
 }
 
+.card-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.card-links .contact-link {
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
 /* --- Hero Section Styles --- */
 .hero-section {
     text-align: center;
