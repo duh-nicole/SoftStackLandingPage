@@ -1,3 +1,6 @@
+/* ==========================================================================
+   01. DESIGN TOKENS & ROOT VARIABLES
+   ========================================================================== */
 :root {
     /* Light Mode Config (Palette 1) */
     color-scheme: light;
@@ -26,7 +29,9 @@
     --shadow: rgba(0, 0, 0, 0.4);
 }
 
-/* --- Layout Rules --- */
+/* ==========================================================================
+   02. BASE & GLOBAL RESETS
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -45,7 +50,14 @@ body {
     line-height: 1.6;
 }
 
-/* Accessibility Skip Link */
+.form-intro h1,
+.form-section h2,
+.section-title,
+.logo {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Accessibility Skip Link & Focus Rings */
 .skip-link {
     position: absolute;
     top: -100px;
@@ -63,7 +75,16 @@ body {
 .skip-link:focus {
     top: 10px;
 }
-/* --- Header and Logo Panel --- */
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--primary-accent);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   03. HEADER & NAVIGATION
+   ========================================================================== */
 .app-header {
     display: flex;
     justify-content: space-between;
@@ -73,25 +94,6 @@ body {
     margin: 0 auto;
     gap: 15px;
     flex-wrap: wrap;
-}
-
-.header-nav {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.nav-btn {
-    text-decoration: none;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    width: auto;
-    white-space: nowrap;
-    line-height: 1.3;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .logo {
@@ -105,6 +107,13 @@ body {
 .logo span {
     color: var(--primary-accent);
     font-weight: 300;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .nav-link {
@@ -122,7 +131,19 @@ body {
     background-color: var(--input-bg);
 }
 
-/* Dropdown Container */
+.nav-btn {
+    text-decoration: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    width: auto;
+    white-space: nowrap;
+    line-height: 1.3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dropdown Navigation */
 .nav-dropdown {
     position: relative;
     display: inline-block;
@@ -148,7 +169,6 @@ body {
     color: #25161b;
 }
 
-/* Dropdown Menu Box */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -179,12 +199,12 @@ body {
     color: var(--primary-accent);
 }
 
-/* Toggle Dropdown on Hover & Focus */
 .nav-dropdown:hover .dropdown-content,
 .nav-dropdown:focus-within .dropdown-content {
     display: block;
 }
 
+/* Theme Toggle Button */
 .theme-toggle-btn {
     background-color: var(--bg-surface);
     color: var(--text-main);
@@ -202,63 +222,13 @@ body {
     border-color: var(--primary-accent);
 }
 
-/* --- Form Container and Card --- */
-.form-container {
-    max-width: 750px;
-    margin: 40px auto 80px auto;
-    padding: 0 20px;
-}
-
+/* ==========================================================================
+   04. LANDING & HERO COMPONENTS (Non-Form Elements)
+   ========================================================================== */
 .landing-main {
     max-width: 1000px;
 }
 
-.onboarding-card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 40px;
-    box-shadow: 0 10px 30px var(--shadow);
-    transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-.form-intro h1,
-.form-section h2,
-.section-title,
-.logo {
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-}
-
-.form-intro {
-    margin-bottom: 40px;
-    border-bottom: 2px dashed var(--border-color);
-    padding-bottom: 20px;
-}
-
-.form-intro h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    letter-spacing: -0.5px;
-}
-
-.form-intro p {
-    color: var(--text-muted);
-    font-size: 1.05rem;
-}
-
-.card-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.card-links .contact-link {
-    font-size: 0.9rem;
-    text-decoration: none;
-}
-
-/* --- Hero Section Styles --- */
 .hero-section {
     text-align: center;
     padding: 4rem 2rem;
@@ -294,7 +264,7 @@ body {
     filter: brightness(1.1);
 }
 
-/* --- Portfolio & Project Grid --- */
+/* Portfolio & Projects Grid */
 .portfolio-section {
     margin-bottom: 60px;
 }
@@ -322,28 +292,16 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 12px var(--shadow);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.3s ease;
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease;
     will-change: transform;
 }
 
 .project-card:hover,
 .project-card:focus-within {
-    transform: translateY(-6px) scale(1.02); /* Slight lift and slight expand */
+    transform: translateY(-6px) scale(1.02);
     box-shadow: 0 12px 28px var(--shadow);
     border-color: var(--primary-accent);
-}
-
-/* Screen Reader / Reduced Motion Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    .project-card {
-        transition: none;
-    }
-
-    .project-card:hover,
-    .project-card:focus-within {
-        transform: none;
-    }
 }
 
 .card-window-header {
@@ -376,11 +334,6 @@ body {
     justify-content: center;
 }
 
-.avatar-frame {
-    aspect-ratio: 1 / 1;
-}
-
-
 .preview-img {
     width: 100%;
     height: 100%;
@@ -400,7 +353,52 @@ body {
     line-height: 1.6;
 }
 
-/* --- Operator Bio Card --- */
+.card-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.card-links .contact-link {
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+/* Service Actions & Items */
+.service-item {
+    margin-bottom: 24px;
+}
+
+.service-item h3 {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.service-item p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.service-link {
+    display: inline-block;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-accent);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.service-link:hover {
+    color: var(--secondary-accent);
+    transform: translateX(4px);
+    text-decoration: underline;
+}
+
+/* Operator Bio Card */
 .operator-profile {
     margin-top: 80px;
     padding: 30px;
@@ -417,6 +415,7 @@ body {
 .avatar-frame {
     width: 90px;
     height: 90px;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     border: 2px solid var(--primary-accent);
     overflow: hidden;
@@ -450,185 +449,7 @@ body {
     line-height: 1.6;
 }
 
-/* --- Footer --- */
-.app-footer {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border-color);
-    margin-top: 60px;
-    font-family: monospace;
-}
-
-/* --- Form Sections & Input Groups --- */
-.form-section {
-    margin-bottom: 35px;
-}
-
-.form-section h2 {
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    color: var(--primary-accent);
-}
-
-.input-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.input-group label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-/* Universal styles for Inputs, Textareas, and Dropdowns */
-.input-group input,
-.input-group textarea,
-.input-group select {
-    background-color: var(--input-bg);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 16px;
-    font-family: inherit;
-    transition: all 0.2s ease;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-.input-group textarea {
-    resize: vertical;
-}
-
-.input-group select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    padding-right: 40px;
-}
-
-/* Focus Ring */
-.input-group input:focus,
-.input-group textarea:focus,
-.input-group select:focus {
-    outline: none;
-    border-color: var(--primary-accent);
-    box-shadow: 0 0 0 3px var(--border-color);
-}
-
-/* Accessibility Focus Ring */
-button:focus-visible,
-a:focus-visible {
-    outline: 3px solid var(--primary-accent);
-    outline-offset: 2px;
-}
-
-/* --- Submit Button --- */
-.form-actions {
-    margin-top: 20px;
-}
-
-.submit-btn {
-    background-color: var(--primary-accent);
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 16px 32px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    width: 100%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px var(--shadow);
-}
-
-.submit-btn:hover {
-    background-color: var(--secondary-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--shadow);
-}
-
-[data-theme="dark"] .submit-btn:hover {
-    color: #25161b;
-}
-
-.submit-btn:active {
-    transform: translateY(0);
-}
-
-/* --- Mobile Queries (< 600px) --- */
-@media (max-width: 600px) {
-    .app-header {
-        padding: 16px 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .header-nav {
-        width: 100%;
-        justify-content: flex-start;
-    }
-
-    .hero-title {
-        font-size: 2.2rem;
-    }
-
-    .cta-btn {
-        width: 100%;
-        padding: 14px 20px;
-        font-size: 0.95rem;
-    }
-}
-
-/* --- Service Action Link --- */
-.service-item {
-    margin-bottom: 24px;
-}
-
-.service-item h3 {
-    font-size: 1.15rem;
-    color: var(--text-main);
-    margin-bottom: 6px;
-}
-
-.service-item p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-.service-link {
-    display: inline-block;
-    margin-top: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--primary-accent);
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.service-link:hover {
-    color: var(--secondary-accent);
-    transform: translateX(4px);
-
-    text-decoration: underline;
-}
-
-
-/* --- Contact / Ways to Reach Me Section --- */
+/* Contact / Ways to Reach Me */
 .contact-section {
     margin-top: 60px;
     margin-bottom: 40px;
@@ -680,8 +501,282 @@ a:focus-visible {
     color: var(--secondary-accent);
 }
 
+/* ==========================================================================
+   05. FORM LAYOUT & MAIN CARD CONTAINER
+   ========================================================================== */
+.form-container {
+    max-width: 750px;
+    margin: 40px auto 80px auto;
+    padding: 0 20px;
+}
 
-/* --- Mobile & Touch Accessibility Tweaks (< 768px) --- */
+.onboarding-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px var(--shadow);
+    transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.form-intro {
+    margin-bottom: 40px;
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 20px;
+}
+
+.form-intro h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.form-intro p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.form-section {
+    margin-bottom: 35px;
+}
+
+.form-section h2 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    color: var(--primary-accent);
+}
+
+/* ==========================================================================
+   06. FORM INPUTS & STANDARD CONTROLS
+   ========================================================================== */
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Standardized Text Inputs, Textareas, and Dropdowns */
+.input-group input,
+.input-group textarea,
+.input-group select {
+    background-color: var(--input-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+.input-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 0 3px var(--border-color);
+}
+
+/* ==========================================================================
+   07. CUSTOM CONTROL RESETS (Checkboxes, Radios & Sliders)
+   ========================================================================== */
+/* Reset default behavior so non-text inputs don't inherit textarea border frames */
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+    -webkit-appearance: auto;
+    appearance: auto;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* 7a. Creative Energy Range Slider */
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    margin: 12px 0 6px 0;
+    accent-color: var(--primary-accent);
+    cursor: pointer;
+}
+
+/* 7b. Standalone WCAG Accessibility Checkbox Box */
+.wcag-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    text-align: left;
+}
+
+.wcag-box label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+/* 7c. Platform Features Checkbox Grid */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text-main);
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    accent-color: var(--primary-accent);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* 7d. Post-Launch Maintenance Radio Buttons */
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin-top: 3px;
+    accent-color: var(--primary-accent);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.radio-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   08. FORM ACTION BUTTONS
+   ========================================================================== */
+.form-actions {
+    margin-top: 20px;
+}
+
+.submit-btn {
+    background-color: var(--primary-accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.submit-btn:hover {
+    background-color: var(--secondary-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--shadow);
+}
+
+[data-theme="dark"] .submit-btn:hover {
+    color: #25161b;
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   09. FOOTER
+   ========================================================================== */
+.app-footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 60px;
+    font-family: monospace;
+}
+
+/* ==========================================================================
+   10. MEDIA QUERIES & RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* Mobile Breakpoint (< 600px) */
+@media (max-width: 600px) {
+    .app-header {
+        padding: 16px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .cta-btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Tablet & Mobile Touch Target Accessibility (< 768px) */
 @media (max-width: 768px) {
     /* Touch Target Sizing (WCAG Minimum 44x44px) */
     .nav-dropdown-btn,
@@ -702,7 +797,7 @@ a:focus-visible {
         width: auto;
     }
 
-    /* Modal Touch Optimizations */
+    /* Modal Optimizations */
     .modal-content {
         width: 92%;
         padding: 20px;
@@ -721,17 +816,7 @@ a:focus-visible {
         justify-content: center;
     }
 
-
-    /* --- Checkbox Grid Layout --- */
-    .checkbox-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-
-    /* Scrollable Data Table on Mobile */
+    /* Scrollable Tables on Mobile */
     .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -746,5 +831,17 @@ a:focus-visible {
     .metrics-grid {
         grid-template-columns: 1fr;
         gap: 15px;
+    }
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+    .project-card {
+        transition: none;
+    }
+
+    .project-card:hover,
+    .project-card:focus-within {
+        transform: none;
     }
 }
