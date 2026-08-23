@@ -18,6 +18,8 @@
 
     
 <body>
+
+<a href="#onboardingForm" class="skip-link hidden">Skip to main content</a>
 <header class="app-header">
     <a href="index.html" class="logo">SoftStack<span>Studios</span></a>
     <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme"
@@ -41,8 +43,8 @@
 
         <form id="onboardingForm">
             <input type="hidden" name="access_key" value="53f6faa6-c347-46cd-a7ff-b4cb6defd107">
-            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1"
-                   autocomplete="off">
+            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
+            
             <section class="form-section">
                 <h2>01. Business Profile</h2>
                 <div class="input-grid">
@@ -129,37 +131,35 @@
                               placeholder="e.g., Hidden popups, overly complex dropdowns, the color neon green..."></textarea>
                 </div>
 
-                <div class="input-group checkbox-group"
-                     style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
-                    <input type="checkbox" id="hasAccessibilityPriority" name="accessibility_priority"
-                           style="width: auto;">
-                    <label for="hasAccessibilityPriority" style="margin: 0;">This project requires strict regulatory
-                        accessibility compliance (WCAG 2.1)</label>
+                <!-- WCAG Standardized Section -->
+                <div class="wcag-box">
+                  <input type="checkbox" id="wcag-check" name="wcag">
+                  <label for="wcag-check">This project requires strict regulatory accessibility compliance (WCAG 2.1)</label>
                 </div>
-
-                <div class="input-group">
-                    <fieldset style="border: none; padding: 0; margin: 0;">
-                        <legend style="font-weight: bold; margin-bottom: 8px;">Required Platform Features</legend>
-                        <div class="checkbox-grid">
-                            <label for="featAuth">
-                                <input type="checkbox" id="featAuth" name="feature_user_auth" value="Yes">
-                                User Authentication / Logins
-                            </label>
-                            <label for="featPay">
-                                <input type="checkbox" id="featPay" name="feature_payment_processing" value="Yes">
-                                Payment Gateway (Stripe)
-                            </label>
-                            <label for="featDash">
-                                <input type="checkbox" id="featDash" name="feature_dashboard" value="Yes">
-                                Admin Dashboard & Analytics
-                            </label>
-                            <label for="featApi">
-                                <input type="checkbox" id="featApi" name="feature_api_integration" value="Yes">
-                                Third-Party API Integrations
-                            </label>
-                        </div>
-                    </fieldset>
-                </div>
+                
+                <!-- Features Section -->
+                <div class="features-block" style="margin-top: 24px;">
+                    <h3>Required Platform Features</h3>
+                    <div class="checkbox-grid">
+                        
+                        <label class="checkbox-item">
+                          <input type="checkbox" name="features" value="auth"> User Authentication / Logins
+                        </label>
+                            
+                        <label class="checkbox-item">
+                          <input type="checkbox" name="features" value="stripe"> Payment Gateway (Stripe)
+                        </label>
+                            
+                        <label class="checkbox-item">
+                          <input type="checkbox" name="features" value="admin"> Admin Dashboard & Analytics
+                        </label>
+                            
+                        <label class="checkbox-item">
+                          <input type="checkbox" name="features" value="api"> Third-Party API Integrations
+                        </label>
+                        
+                      </div>
+                    </div>
             </section>
 
             <section class="form-section">
@@ -189,21 +189,21 @@
             <section class="form-section">
                 <h2>04. Post-Launch Support</h2>
                 <fieldset class="input-group" style="border: none; padding: 0; margin: 0;">
-                    <legend style="font-weight: bold; margin-bottom: 8px;">
+                    <legend style="font-weight: bold; margin-bottom: 12px; color: var(--text-main);">
                         Would you like to secure a monthly maintenance and availability retainer?
                     </legend>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <label style="font-weight: normal;" for="maintRetainer">
-                            <input type="radio" id="maintRetainer" name="maintenance_plan" value="yes_retainer" checked style="width: auto; margin-right: 8px;">
-                            <strong>Yes, secure my spot!</strong> After the 30-day warranty, I am happy to remain
+                    <div class="radio-stack">
+                        <label class="radio-item" for="maintRetainer">
+                            <input type="radio" id="maintRetainer" name="maintenance_plan" value="yes_retainer" checked>
+                            <span><strong>Yes, secure my spot!</strong> After the 30-day warranty, I am happy to remain
                             on-call to maintain your site, monitor security, and fix any system breaks for $50/month
                             (covering up to 1 hour of work per month). Any additional work will be billed at a
-                            competitive hourly rate.
+                            competitive hourly rate.</span>
                         </label>
-                        <label style="font-weight: normal;" for="maintWarranty">
-                            <input type="radio" id="maintWarranty" name="maintenance_plan" value="warranty_only" style="width: auto; margin-right: 8px;">
-                            <strong>30-Day Warranty Only, Thanks though!</strong> Just the standard 30 days of launch
-                            support; future updates/fixes will be billed at an hourly rate based on availability.
+                        <label class="radio-item" for="maintWarranty">
+                            <input type="radio" id="maintWarranty" name="maintenance_plan" value="warranty_only">
+                            <span><strong>30-Day Warranty Only, Thanks though!</strong> Just the standard 30 days of launch
+                            support; future updates/fixes will be billed at an hourly rate based on availability.</span>
                         </label>
                     </div>
                 </fieldset>
@@ -211,6 +211,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="submit-btn" id="submitBtn">Initialize Project Brief</button>
+                <button type="reset" class="cancel-btn" id="cancelBtn">Cancel & Reset</button>
             </div>
 
         </form>
@@ -246,14 +247,38 @@
         vibeOutput.textContent = vibeLabels[e.target.value] || e.target.value;
     });
 
-    // --- Web3Forms Submission Bridge --- //
+// --- 3. Live Input Handling & Sanitization --- //
+    const phoneInput = document.getElementById('clientPhone');
+    const emailInput = document.getElementById('clientEmail');
+
+    // Auto-format phone input while typing
+    phoneInput.addEventListener('input', (e) => {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
+    });
+
+    // Auto-trim whitespace on email field blur
+    emailInput.addEventListener('blur', (e) => {
+        e.target.value = e.target.value.trim();
+    });
+
+    // --- 4. Form Reset / Cancel Handler --- //
     const onboardingForm = document.getElementById('onboardingForm');
+    
+    onboardingForm.addEventListener('reset', () => {
+        // Delay output reset slightly to allow form reset state to clear
+        setTimeout(() => {
+            vibeOutput.textContent = vibeLabels['3'];
+        }, 10);
+    });
+
+    // --- 5. Web3Forms Submission Bridge --- //
     const submitBtn = document.getElementById('submitBtn');
 
     onboardingForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        // Prevent double submission
+        // Lock form during submission
         submitBtn.disabled = true;
         const originalBtnText = submitBtn.textContent;
         submitBtn.textContent = "Transmitting Brief...";
@@ -271,7 +296,6 @@
             if (data.success) {
                 alert(`✨ Your project brief has been tucked safely into our queue. We're pouring a fresh cup of coffee and looking over your ideas right now.`);
                 onboardingForm.reset();
-                vibeOutput.textContent = vibeLabels['3'];
             } else {
                 alert(`☕ Ope, just a tiny hiccup!: ${data.message || 'Please check your fields.'}`);
             }
