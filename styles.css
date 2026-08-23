@@ -552,6 +552,11 @@ a:focus-visible {
 /* ==========================================================================
    06. FORM INPUTS & STANDARD CONTROLS
    ========================================================================== */
+.input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
 .input-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -571,7 +576,7 @@ a:focus-visible {
 }
 
 /* Standardized Text Inputs, Textareas, and Dropdowns */
-.input-group input,
+.input-group input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 .input-group textarea,
 .input-group select {
     background-color: var(--input-bg);
@@ -584,10 +589,6 @@ a:focus-visible {
     transition: all 0.2s ease;
     -webkit-appearance: none;
     appearance: none;
-}
-
-.input-group textarea {
-    resize: vertical;
 }
 
 .input-group select {
@@ -609,21 +610,21 @@ a:focus-visible {
    07. CUSTOM CONTROL RESETS (Checkboxes, Radios & Sliders)
    ========================================================================== */
 /* Reset default behavior so non-text inputs don't inherit textarea border frames */
-input[type="checkbox"],
-input[type="radio"],
-input[type="range"] {
-    -webkit-appearance: auto;
-    appearance: auto;
-    box-shadow: none;
-    padding: 0;
-}
-
 .hidden {
     display: none !important;
 }
 
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"] {
+    box-shadow: none;
+    padding: 0;
+}
+
 /* 7a. Creative Energy Range Slider */
 input[type="range"] {
+    -webkit-appearance: auto;
+    appearance: auto;
     width: 100%;
     height: 8px;
     margin: 12px 0 6px 0;
@@ -632,6 +633,12 @@ input[type="range"] {
 }
 
 /* 7b. Standalone WCAG Accessibility Checkbox Box */
+.wcag-box label,
+.checkbox-item,
+.radio-item {
+    user-select: none;
+    -webkit-user-select: none;
+}
 .wcag-box {
     display: flex;
     align-items: center;
@@ -683,12 +690,15 @@ input[type="radio"] {
     accent-color: var(--primary-accent);
     cursor: pointer;
     flex-shrink: 0;
+    appearance: radio;
+    -webkit-appearance: radio;
 }
 
 .radio-stack {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    margin-top: 12px;
 }
 
 .radio-item {
@@ -741,7 +751,7 @@ input[type="radio"] {
 
 .cancel-btn {
     background: transparent;
-    border: 1px solid var(--border-color, #4a4a4a);
+    border: 1px solid var(--border-color);
     color: inherit;
     padding: 12px;
     border-radius: 6px;
