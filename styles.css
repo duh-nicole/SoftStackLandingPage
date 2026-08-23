@@ -614,10 +614,12 @@ input[type="radio"],
 input[type="range"] {
     -webkit-appearance: auto;
     appearance: auto;
-    background-color: transparent;
-    border: none;
     box-shadow: none;
     padding: 0;
+}
+
+.hidden {
+    display: none !important;
 }
 
 /* 7a. Creative Energy Range Slider */
@@ -677,7 +679,7 @@ input[type="radio"] {
     width: 18px;
     height: 18px;
     min-width: 18px;
-    margin-top: 3px;
+    margin-top: 4px;
     accent-color: var(--primary-accent);
     cursor: pointer;
     flex-shrink: 0;
@@ -703,7 +705,10 @@ input[type="radio"] {
    08. FORM ACTION BUTTONS
    ========================================================================== */
 .form-actions {
-    margin-top: 20px;
+   display: flex;
+   flex-direction: column; 
+   gap: 12px;
+   margin-top: 24px;
 }
 
 .submit-btn {
@@ -732,6 +737,15 @@ input[type="radio"] {
 
 .submit-btn:active {
     transform: translateY(0);
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid var(--border-color, #4a4a4a);
+    color: inherit;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 /* ==========================================================================
