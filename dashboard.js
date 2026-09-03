@@ -1,3 +1,9 @@
+const SUPABASE_URL = 'https://ltwdlbjniihlmctzcmcv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_IUA8fTizYLqccuDujYTUpg_qEsB39og';
+
+// Initialize the Supabase Client
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 function escapeHTML(str) {
     if (str === null || str === undefined) return '';
     if (typeof str !== 'string') str = String(str);
