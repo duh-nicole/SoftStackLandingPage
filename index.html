@@ -4,15 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoftStack Studios</title>
+
+<!-- THESE ARE THE META SEO TAGS -->
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="SoftStack Studios | Accessible Web Builds & Full-Stack Engineering">
+    <meta name="description" content="Custom web design, WCAG-compliant accessibility audits, accessible frontend development, and robust full-stack backend systems by Nicole.">
+    <meta name="keywords" content="SoftStack Studios, full-stack engineering, web accessibility, WCAG remediation, accessible web development, frontend development, backend systems">
+    <meta name="author" content="Nicole">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://softstack.studio/">
+    <meta property="og:title" content="SoftStack Studios | Accessible Web Builds & Full-Stack Engineering">
+    <meta property="og:description" content="Custom web design, WCAG-compliant accessibility audits, accessible frontend development, and robust full-stack backend systems by Nicole.">
+    <meta property="og:image" content="https://softstack.studio/bear-preview.svg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://softstack.studio/">
+    <meta name="twitter:title" content="SoftStack Studios | Accessible Web Builds & Full-Stack Engineering">
+    <meta name="twitter:description" content="Custom web design, WCAG-compliant accessibility audits, accessible frontend development, and robust full-stack backend systems by Nicole.">
+    <meta name="twitter:image" content="https://softstack.studio/bear-preview.svg">
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2280%22>ʕ•ᴥ•ʔ</text></svg>">
 </head>
 <body>
 
+<!-- Skip Link -WCAG -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Menu -->
 <header class="app-header">
     <a href="#" class="logo">SoftStack<span>Studios</span></a>
-
     <nav class="header-nav" aria-label="Main Navigation">
         <a href="#services" class="nav-link">Services</a>
         <a href="#portfolio" class="nav-link">Portfolio</a>
@@ -20,15 +51,14 @@
         <a href="#contact" class="nav-link">Contact</a>
 
         <!-- Onboarding & Services Dropdown -->
-        <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme"
-                aria-pressed="true">
-            Theme
+        <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle light or dark theme" aria-pressed="true">
+            Light/Dark Mode
         </button>
     </nav>
 </header>
 
 <!-- Main Content -->
-<main class="form-container landing-main">
+<main id="main-content" class="form-container landing-main">
 
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
@@ -41,8 +71,7 @@
 
     <!-- Services Section -->
     <section id="services" class="services-section">
-        <h2>// CORE SERVICES</h2>
-        <hr>
+        <h2 class="section-title">// CORE SERVICES</h2>
 
         <div class="service-item">
             <h3>Accessibility Audits &amp; WCAG Remediation</h3>
@@ -52,24 +81,26 @@
 
         <div class="service-item">
             <h3>Accessible Frontend Development</h3>
-            <p>Custom, responsive websites built using semantic HTML, clean CSS, and accessible UI patterns from the
-                ground up.</p>
+            <p>Custom, responsive websites built using semantic HTML, clean CSS, and accessible UI patterns from the ground up.</p>
         </div>
 
         <div class="service-item">
             <h3>Full-Stack &amp; Backend Systems</h3>
-            <p>Robust backend architecture, custom API development, and secure data pipelines designed for reliability
-                and clean maintainability.</p>
+            <p>Robust backend architecture, custom API development, and secure data pipelines designed for reliability and clean maintainability.</p>
         </div>
 
-        <a href="#contact" class="service-link">Start an Onboarding Brief &rarr;</a>    </section>
+        <a href="#contact" class="service-link">Start an Onboarding Brief &rarr;
+        </a>    
+    </section>
 
     <!-- Portfolio Section -->
     <section class="portfolio-section" id="portfolio">
         <h2 class="section-title">// PORTFOLIO</h2>
 
+        <!-- Putting the portfolio in a grid so its pretty -->
         <div class="project-grid">
-
+            
+            <!-- Drip Filter -->
             <article class="project-card">
                 <div class="card-window-header">
                     <span>drip_filter_dashboard.sys</span>
@@ -78,18 +109,18 @@
                 <div class="card-body">
                     <div class="preview-frame">
                         <img src="assets/dripfilter.png"
-                             alt="Preview of drip Filter dashboard interface showing user data filtered by ID number"
-                             class="preview-img">
+                             alt="Preview of drip Filter dashboard interface showing user data filtered by ID number" class="preview-img">
                     </div>
                     <h3 class="card-title">DripFilter</h3>
                     <p class="card-desc">
-                        An interactive data visualization and parsing interface. Features dynamic client-side
-                        filtering, multi-criteria sorting, and responsive conditional layout styling designed to
+                        An interactive data visualization and parsing interface. Features dynamic client-side filtering, multi-criteria sorting, and responsive conditional layout styling designed to
                         make searching through complex datasets quick and convenient.
                     </p>
                 </div>
             </article>
 
+
+            <!-- Grade Quackulator -->
             <article class="project-card">
                 <div class="card-window-header">
                     <span>grade_quackulator_v2.exe</span>
@@ -97,16 +128,25 @@
                 </div>
                 <div class="card-body">
                     <div class="preview-frame">
-                        <img src="assets/gradequackulator_results.png"
-                             alt="Preview of grade Quack-u-lator after 10 assignments have been added showing weighted grade logic"
-                             class="preview-img">
+                        <a href="https://quackulator-demo.softstack.studio" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           aria-label="View Grade Quackulator live demo (opens in new tab)">
+                            <img src="assets/gradequackulator_results.png"
+                                 alt="Interface preview of Grade Quackulator showing weighted grade inputs and calculated target goals." class="preview-img">
+                        </a>
                     </div>
                     <h3 class="card-title">Grade Quackulator</h3>
                     <p class="card-desc">
-                        A responsive weighted grade calculator featuring a fun retro feel and responsiveness. Built with
+                        A responsive weighted grade calculator featuring a fun retro feel and responsiveness. Eliminates weighted-grade calculation errors by enforcing strict React state validation. Features an instant target-goal algorithm that calculates minimum required final exam scores to reduce academic planning friction. Built with
                         React state hooks to manage dynamic grade cards, handle error states for weights, and run a
                         target-goal calculator that tells you exactly what score you need on your final.
                     </p>
+
+                    <div class="card-links">
+                        <a href="https://quackulator-demo.softstack.studio" target="_blank" rel="noopener noreferrer" class="contact-link">Live Demo ↗</a>
+                        <a href="https://github.com/duh-nicole/grade-quackulator" target="_blank" rel="noopener noreferrer" class="contact-link">Source Code</a>
+                    </div>
                 </div>
             </article>
 
