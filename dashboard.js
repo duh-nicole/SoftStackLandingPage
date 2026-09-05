@@ -121,7 +121,7 @@ async function fetchPipelineData() {
     try {
         // Fetch directly from your Supabase table
         const {data: briefs, error} = await db
-            .from('briefs')
+            .from('project_briefs')
             .select('*');
 
         if (error) throw error;
