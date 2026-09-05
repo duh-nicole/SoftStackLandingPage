@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SoftStack Studios client intake form. Submit your project requirements, target timeline, and budget.">
+    <meta name="description"
+          content="SoftStack Studios client intake form. Submit your project requirements, target timeline, and budget.">
     <meta property="og:title" content="SoftStack Studios // Client Intake">
     <meta property="og:description" content="Submit your project requirements, target timeline, and budget.">
     <meta property="og:type" content="website">
-    
+
     <title>SoftStack Studios Intake Info</title>
-    
-    <link rel="preconnect" href="https://api.web3forms.com">
+
+    <!-- Supabase JS Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" decoding="async"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 font-size=%2280%22>ʕ•ᴥ•ʔ</text></svg>">
 </head>
 
-    
 <body>
-
 <a href="#onboardingForm" class="skip-link hidden">Skip to main content</a>
 <header class="app-header">
     <a href="index.html" class="logo">SoftStack<span>Studios</span></a>
@@ -42,25 +43,25 @@
         </div>
 
         <form id="onboardingForm">
-            <input type="hidden" name="access_key" value="53f6faa6-c347-46cd-a7ff-b4cb6defd107">
-            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
-            
             <section class="form-section">
                 <h2>01. Business Profile</h2>
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="clientName">First and Last Name</label>
-                        <input type="text" id="clientName" name="name" autocomplete="name" required maxlength="50"
+                        <input type="text" id="clientName" name="client_name" autocomplete="name" required
+                               maxlength="50"
                                placeholder="Amanda Bandana">
                     </div>
                     <div class="input-group">
                         <label for="clientCompany">Company Name</label>
-                        <input type="text" id="clientCompany" name="company" autocomplete="organization" maxlength="100"
-                               placeholder="The Most Literal Housekeeper at Your Service, LLC">
+                        <input type="text" id="clientCompany" name="company_name" autocomplete="organization"
+                               maxlength="100"
+                               placeholder="The Most Literal Housekeeper, LLC">
                     </div>
                     <div class="input-group">
                         <label for="clientEmail">Email Address</label>
-                        <input type="email" id="clientEmail" name="email" autocomplete="email" required placeholder="ama_bda@company.com">
+                        <input type="email" id="clientEmail" name="email" autocomplete="email" required
+                               placeholder="ama_bda@company.com">
                     </div>
                     <div class="input-group">
                         <label for="clientPhone">Phone Number</label>
@@ -120,8 +121,8 @@
                     <input type="range" id="creativeEnergy" name="creative_energy" min="1" max="5" value="3"
                            aria-describedby="vibeValue">
                     <div style="display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.8; margin-top: 4px;">
-                        <span>1 = Corporate Clean</span>
-                        <span>5 = Cyberpunk Chaos</span>
+                        <span>1 = Corporate Clean | Strictly Functional</span>
+                        <span>5 = Cyberpunk Chaos | Expressive & Bold</span>
                     </div>
                 </div>
 
@@ -133,33 +134,33 @@
 
                 <!-- WCAG Standardized Section -->
                 <div class="wcag-box">
-                  <input type="checkbox" id="wcag-check" name="wcag">
-                  <label for="wcag-check">This project requires strict regulatory accessibility compliance (WCAG 2.1)</label>
+                    <input type="checkbox" id="wcag-check" name="has_accessibility_priority">
+                    <label for="wcag-check">This project requires strict regulatory accessibility compliance (WCAG
+                        2.1)</label>
                 </div>
-                
+
                 <!-- Features Section -->
                 <div class="features-block" style="margin-top: 24px;">
                     <h3>Required Platform Features</h3>
                     <div class="checkbox-grid">
-                        
                         <label class="checkbox-item">
-                          <input type="checkbox" name="features" value="auth"> User Authentication / Logins
+                            <input type="checkbox" name="required_features" value="user_authentication"> User
+                            Authentication / Logins
                         </label>
-                            
                         <label class="checkbox-item">
-                          <input type="checkbox" name="features" value="stripe"> Payment Gateway (Stripe)
+                            <input type="checkbox" name="required_features" value="stripe_payments"> Payment Gateway
+                            (Stripe)
                         </label>
-                            
                         <label class="checkbox-item">
-                          <input type="checkbox" name="features" value="admin"> Admin Dashboard & Analytics
+                            <input type="checkbox" name="required_features" value="admin_dashboard"> Admin Dashboard &
+                            Analytics
                         </label>
-                            
                         <label class="checkbox-item">
-                          <input type="checkbox" name="features" value="api"> Third-Party API Integrations
+                            <input type="checkbox" name="required_features" value="api_integrations"> Third-Party API
+                            Integrations
                         </label>
-                        
-                      </div>
                     </div>
+                </div>
             </section>
 
             <section class="form-section">
@@ -195,7 +196,7 @@
                     <div class="radio-stack">
                         <label class="radio-item" for="maintRetainer">
                             <input type="radio" id="maintRetainer" name="maintenance_plan" value="yes_retainer" checked>
-                            <span><strong>Yes, secure my spot!</strong> After the 30-day warranty, I am happy to remain
+                            <span><strong>Yes, I can't do this alone!</strong> After the 30-day warranty, I am happy to remain
                             on-call to maintain your site, monitor security, and fix any system breaks for $50/month
                             (covering up to 1 hour of work per month). Any additional work will be billed at a
                             competitive hourly rate.</span>
@@ -210,7 +211,7 @@
             </section>
 
             <div class="form-actions">
-                <button type="submit" class="submit-btn" id="submitBtn">Initialize Project Brief</button>
+                <button type="submit" class="submit-btn" id="submitBtn">Initialize Your Project Brief</button>
                 <button type="reset" class="cancel-btn" id="cancelBtn">Cancel & Reset</button>
             </div>
 
@@ -218,8 +219,39 @@
     </div>
 </main>
 
+<!-- Custom Success Modal (HTML placed outside script tag) -->
+<div id="successModal" class="custom-modal-overlay" style="display: none;">
+    <div class="custom-modal-card">
+        <div class="modal-window-header">
+            <span>brief_submitted.sys</span>
+            <span aria-hidden="true">[ ʕ•ᴥ•ʔ ]</span>
+        </div>
+        <div class="modal-body">
+            <h2>✨ Brief Received!</h2>
+            <p>
+                Your project brief has been tucked safely into the queue. I'm pouring a fresh cup of coffee and
+                looking over your ideas right now!
+            </p>
+
+            <div class="modal-actions">
+                <a href="index.html" class="modal-btn primary-btn">
+                    ← Return to Main Page
+                </a>
+                <button type="button" id="closeSuccessModal" class="modal-btn secondary-btn">
+                    Submit Another Brief
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    // --- Theme Toggle --- //
+    // --- 1. Supabase Initialization --- //
+    const SUPABASE_URL = 'https://ltwdlbjniihlmctzcmcv.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_IUA8fTizYLqccuDujYTUpg_qEsB39og';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // --- 2. Theme Toggle --- //
     const toggleButton = document.getElementById('themeToggle');
     toggleButton.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -232,7 +264,7 @@
         }
     });
 
-    // --- Dynamic Slider Value Output --- //
+    // --- 3. Dynamic Slider Value Output --- //
     const energyInput = document.getElementById('creativeEnergy');
     const vibeOutput = document.getElementById('vibeValue');
     const vibeLabels = {
@@ -247,68 +279,84 @@
         vibeOutput.textContent = vibeLabels[e.target.value] || e.target.value;
     });
 
-// --- 3. Live Input Handling & Sanitization --- //
+    // --- 4. Live Input Formatting & Sanitization --- //
     const phoneInput = document.getElementById('clientPhone');
     const emailInput = document.getElementById('clientEmail');
 
-    // Auto-format phone input while typing
     phoneInput.addEventListener('input', (e) => {
         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
         e.target.value = !x[2] ? x[1] : `(${x[1]}) ${x[2]}` + (x[3] ? `-${x[3]}` : '');
     });
 
-    // Auto-trim whitespace on email field blur
     emailInput.addEventListener('blur', (e) => {
         e.target.value = e.target.value.trim();
     });
 
-    // --- 4. Form Reset / Cancel Handler --- //
+    // --- 5. Form Reset / Cancel Handler --- //
     const onboardingForm = document.getElementById('onboardingForm');
-    
+
     onboardingForm.addEventListener('reset', () => {
-        // Delay output reset slightly to allow form reset state to clear
         setTimeout(() => {
             vibeOutput.textContent = vibeLabels['3'];
         }, 10);
     });
 
-    // --- 5. Web3Forms Submission Bridge --- //
+    // --- 6. Supabase Submission Bridge --- //
     const submitBtn = document.getElementById('submitBtn');
+    const successModal = document.getElementById('successModal');
+    const closeSuccessModalBtn = document.getElementById('closeSuccessModal');
 
     onboardingForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-
-        // Lock form during submission
         submitBtn.disabled = true;
+
         const originalBtnText = submitBtn.textContent;
         submitBtn.textContent = "Transmitting Brief...";
 
         const formData = new FormData(onboardingForm);
+        const requiredFeatures = formData.getAll('required_features').join(', ');
+        const antiFeatures = formData.getAll('anti_features').join(', ');
+        const payload = {
+            client_name: formData.get('client_name') || 'Anon Ymous',
+            company_name: formData.get('company_name') || null,
+            primary_goal: formData.get('primary_goal') || 'Unspecified goal',
+            budget_range: formData.get('budget_range') || 'TBD',
+            timeline: formData.get('timeline') || 'TBD',
+            creative_energy: parseInt(formData.get('creative_energy') || '3', 10),
+            discovery_source: formData.get('discovery_source') || 'Direct Discovery',
+            business_summary: formData.get('business_summary') || null,
+            anti_features: antiFeatures || null,
+            access_accommodations: formData.get('access_accommodations') || null,
+            required_features: requiredFeatures || null,
+            has_accessibility_priority: formData.has('has_accessibility_priority'),
+            status: 'Received'
+        };
 
         try {
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData
-            });
+            // Use 'supabaseClient' instead of 'supabase'
+            const {data, error} = await supabaseClient
+                .from('project_briefs')
+                .insert([payload]);
 
-            const data = await response.json();
+            if (error) throw error;
 
-            if (data.success) {
-                alert(`✨ Your project brief has been tucked safely into our queue. We're pouring a fresh cup of coffee and looking over your ideas right now.`);
-                onboardingForm.reset();
-            } else {
-                alert(`☕ Ope, just a tiny hiccup!: ${data.message || 'Please check your fields.'}`);
-            }
+            onboardingForm.reset();
+            successModal.style.display = 'flex';
+
         } catch (error) {
             console.error("Pipeline Connection Error:", error);
-            alert("Could not connect to the submission server. Please check your internet connection.");
+            alert(`☕ Ope, just a tiny hiccup!: ${error.message || 'Please check your connection and try again.'}`);
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = originalBtnText;
         }
     });
+
+    if (closeSuccessModalBtn) {
+        closeSuccessModalBtn.addEventListener('click', () => {
+            successModal.style.display = 'none';
+        });
+    }
 </script>
 </body>
 </html>
-
-
