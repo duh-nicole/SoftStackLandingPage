@@ -61,7 +61,6 @@ function closeModal() {
 
     window.removeEventListener('keydown', handleModalFocusTrap);
 
-    // Return focus to the table row or button that triggered the modal
     if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
         previouslyFocusedElement.focus();
     }
@@ -80,35 +79,32 @@ window.addEventListener('keydown', (e) => {
 function openInspectionModal(item) {
     previouslyFocusedElement = document.activeElement;
 
-    const name = item.client?.name || item.name || 'Anonymous';
-    const company = item.client?.company || item.company;
+    const name = item.client_name || 'Anonymous';
+    const company = item.company_name;
     const companyText = company ? ` (${company})` : '';
 
     document.getElementById('modalClientTitle').textContent = `${name}${companyText} // Project Profile`;
     document.getElementById('modalTimeline').textContent = item.timeline || 'Unspecified';
-    document.getElementById('modalVibe').textContent = `${item.creative_energy || 3} / 5 Vibe`;
+    document.getElementById('modalVibe').textContent = `${item.creative_energy ?? 3} / 5 Vibe`;
     document.getElementById('modalSource').textContent = item.discovery_source || 'Direct Discovery / Unknown';
     document.getElementById('modalSummary').textContent = item.business_summary || 'No overview provided.';
 
     let antiFeaturesText = 'None noted!';
     if (Array.isArray(item.anti_features)) {
         antiFeaturesText = item.anti_features.join(', ');
-    } else if (typeof item.anti_features === 'string') {
+    } else if (typeof item.anti_features === 'string' && item.anti_features.trim() !== '') {
         antiFeaturesText = item.anti_features;
     }
     document.getElementById('modalAntiFeatures').textContent = antiFeaturesText;
 
-    // Handle accessibility & compliance accommodations
-    const complianceServices = item.compliance_services || item.access_accommodations || item.accessibility_requirements || 'No specific accommodations flagged.';
+    const complianceServices = item.access_accomodations || item.compliance_services || 'No specific accommodations flagged.';
     document.getElementById('modalAccess').textContent = complianceServices;
 
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
     modal.style.display = 'flex';
 
-    // Trap focus inside modal
     window.addEventListener('keydown', handleModalFocusTrap);
-    // Set focus to the close button
     closeModalBtn.setAttribute('tabindex', '0');
     closeModalBtn.setAttribute('aria-label', 'Close inspection modal');
     closeModalBtn.focus();
@@ -119,15 +115,16 @@ async function fetchPipelineData() {
     const totalCounter = document.getElementById('totalBriefs');
 
     try {
-        // Fetch directly from your Supabase table
+        // Query exact table name without 'public.' prefix
         const {data: briefs, error} = await db
-            .from('public.project_briefs')
+            .from('project_briefs')
             .select('*');
 
         if (error) throw error;
 
         totalCounter.textContent = briefs.length;
 
+        // Calculate total pipeline value
         let totalValue = 0;
         briefs.forEach(item => {
             const budget = item.budget_range || '';
@@ -135,6 +132,7 @@ async function fetchPipelineData() {
             else if (budget.includes('$5k')) totalValue += 5000;
             else if (budget.includes('$10k')) totalValue += 10000;
         });
+
         document.getElementById('pipelineValue').textContent = `$${totalValue.toLocaleString()}`;
         rowsContainer.innerHTML = '';
 
@@ -149,7 +147,11 @@ async function fetchPipelineData() {
             row.style.cursor = 'pointer';
             row.setAttribute('tabindex', '0');
             row.setAttribute('role', 'button');
-            row.setAttribute('aria-label', `Inspect details for ${item.client?.name || item.name || 'Anonymous'}`);
+
+            const clientName = item.client_name || 'Anonymous';
+            const clientCompany = item.company_name;
+
+            row.setAttribute('aria-label', `Inspect details for ${clientName}`);
 
             row.addEventListener('click', () => openInspectionModal(item));
             row.addEventListener('keydown', (e) => {
@@ -158,9 +160,6 @@ async function fetchPipelineData() {
                     openInspectionModal(item);
                 }
             });
-
-            const clientName = item.client?.name || item.name || 'Anonymous';
-            const clientCompany = item.client?.company || item.company;
 
             const safeName = escapeHTML(clientName);
             const safeCompany = clientCompany ?
@@ -172,14 +171,18 @@ async function fetchPipelineData() {
             const safeTimeline = escapeHTML(item.timeline || 'TBD');
 
             let featureTagsHTML = '';
-            const features = item.required_features || item.features;
-            if (Array.isArray(features)) {
-                featureTagsHTML = features.map(feat => `<span class="feature-tag">${escapeHTML(feat.replace(/_/g, ' '))}</span>`).join('');
-            } else if (typeof features === 'string') {
-                featureTagsHTML = features.split(',').map(feat => `<span class="feature-tag">${escapeHTML(feat.trim().replace(/_/g, ' '))}</span>`).join('');
+            const features = item.required_features;
+            if (typeof features === 'string' && features.trim() !== '') {
+                featureTagsHTML = features.split(',').map(feat =>
+                    `<span class="feature-tag">${escapeHTML(feat.trim().replace(/_/g, ' '))}</span>`
+                ).join('');
+            } else if (Array.isArray(features)) {
+                featureTagsHTML = features.map(feat =>
+                    `<span class="feature-tag">${escapeHTML(String(feat).replace(/_/g, ' '))}</span>`
+                ).join('');
             }
 
-            if (item.has_accessibility_priority || item.accessibility_priority) {
+            if (item.has_accessibility_priority) {
                 featureTagsHTML += `<span class="a11y-badge">♿ WCAG Priority</span>`;
             }
 
