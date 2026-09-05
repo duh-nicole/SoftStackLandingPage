@@ -1,8 +1,9 @@
 const SUPABASE_URL = 'https://ltwdlbjniihlmctzcmcv.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_IUA8fTizYLqccuDujYTUpg_qEsB39og';
 
-// Initialize the Supabase Client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Initialize the Supabase Client safely
+const {createClient} = window.supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function escapeHTML(str) {
     if (str === null || str === undefined) return '';
@@ -113,50 +114,31 @@ function openInspectionModal(item) {
     closeModalBtn.focus();
 }
 
-    // Toggle between local dev and live production API
-    const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://127.0.0.1:8000'
-    : 'https://api.softstack.studio';
-
-    async function fetchPipelineData() {
+async function fetchPipelineData() {
     const rowsContainer = document.getElementById('pipelineRows');
     const totalCounter = document.getElementById('totalBriefs');
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/briefs`, {
-            headers: {
-                // Allows browser to display native login dialog if credentials aren't cached
-                'Accept': 'application/json'
-            }
-        });
+        // Fetch directly from your Supabase table
+        const {data: briefs, error} = await db
+            .from('briefs')
+            .select('*');
 
-        if (response.status === 401) {
-            rowsContainer.innerHTML =
-                `<tr><td colspan="6" style="text-align: center; color: var(--primary-accent);">Authentication required. Refresh and sign in with admin credentials.</td></tr>`;
-            return;
-        }
+        if (error) throw error;
 
-        if (!response.ok) throw new Error("Database network flatline");
-
-        const briefs = await response.json();
         totalCounter.textContent = briefs.length;
 
         let totalValue = 0;
         briefs.forEach(item => {
             const budget = item.budget_range || '';
-            if (budget.includes('$1k')) {
-                totalValue += 1000;
-            } else if (budget.includes('$5k')) {
-                totalValue += 5000;
-            } else if (budget.includes('$10k')) {
-                totalValue += 10000;
-            }
+            if (budget.includes('$1k')) totalValue += 1000;
+            else if (budget.includes('$5k')) totalValue += 5000;
+            else if (budget.includes('$10k')) totalValue += 10000;
         });
         document.getElementById('pipelineValue').textContent = `$${totalValue.toLocaleString()}`;
-
         rowsContainer.innerHTML = '';
 
-        if (briefs.length === 0) {
+        if (!briefs || briefs.length === 0) {
             rowsContainer.innerHTML =
                 `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No active project briefs found in the database.</td></tr>`;
             return;
@@ -215,7 +197,7 @@ function openInspectionModal(item) {
     } catch (error) {
         console.error("Dashboard Sync Error:", error);
         rowsContainer.innerHTML =
-            `<tr><td colspan="6" style="text-align: center; color: var(--primary-accent);">Pipeline sync failed. Is your FastAPI service running?</td></tr>`;
+            `<tr><td colspan="6" style="text-align: center; color: var(--primary-accent);">Pipeline sync failed. Check browser console for details.</td></tr>`;
     }
 }
 
