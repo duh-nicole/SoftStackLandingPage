@@ -132,11 +132,31 @@
                               placeholder="e.g., Hidden popups, overly complex dropdowns, the color neon green..."></textarea>
                 </div>
 
-                <!-- WCAG Standardized Section -->
-                <div class="wcag-box">
-                    <input type="checkbox" id="wcag-check" name="has_accessibility_priority">
-                    <label for="wcag-check">This project requires strict regulatory accessibility compliance (WCAG
-                        2.1)</label>
+                <!-- Accessibility & Compliance Section -->
+                <div class="form-section">
+                    <h3>02b. Accessibility & Compliance Services</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+                        Select any auditing or regulatory requirements for your current or new digital assets.
+                    </p>
+
+                    <div class="checkbox-grid">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="compliance_services" value="wcag_21_audit">
+                            Standalone WCAG 2.1 AA Accessibility Audit
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="compliance_services" value="remediation_support">
+                            Accessibility Code Remediation & Fixing
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="compliance_services" value="codebase_security_check">
+                            Codebase & Vulnerability Health Check
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="compliance_services" value="launch_compliance">
+                            Pre-Launch Regulatory & Consent Review
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Features Section -->
@@ -211,7 +231,7 @@
             </section>
 
             <div class="form-actions">
-                <button type="submit" class="submit-btn" id="submitBtn">Initialize Your Project Brief</button>
+                <button type="button" class="submit-btn" id="submitBtn">Initialize Your Project Brief</button>
                 <button type="reset" class="cancel-btn" id="cancelBtn">Cancel & Reset</button>
             </div>
 
@@ -306,40 +326,65 @@
     const successModal = document.getElementById('successModal');
     const closeSuccessModalBtn = document.getElementById('closeSuccessModal');
 
-    onboardingForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+    submitBtn.addEventListener('click', async () => {
+        // Disable the submit button to prevent multiple submissions
         submitBtn.disabled = true;
-
         const originalBtnText = submitBtn.textContent;
         submitBtn.textContent = "Transmitting Brief...";
-
-        const formData = new FormData(onboardingForm);
-        const requiredFeatures = formData.getAll('required_features').join(', ');
-        const antiFeatures = formData.getAll('anti_features').join(', ');
-        const payload = {
-            client_name: formData.get('client_name') || 'Anon Ymous',
-            company_name: formData.get('company_name') || null,
-            primary_goal: formData.get('primary_goal') || 'Unspecified goal',
-            budget_range: formData.get('budget_range') || 'TBD',
-            timeline: formData.get('timeline') || 'TBD',
-            creative_energy: parseInt(formData.get('creative_energy') || '3', 10),
-            discovery_source: formData.get('discovery_source') || 'Direct Discovery',
-            business_summary: formData.get('business_summary') || null,
-            anti_features: antiFeatures || null,
-            access_accommodations: formData.get('access_accommodations') || null,
-            required_features: requiredFeatures || null,
-            has_accessibility_priority: formData.has('has_accessibility_priority'),
-            status: 'Received'
-        };
-
         try {
-            // Use 'supabaseClient' instead of 'supabase'
+            const formData = new FormData(onboardingForm);
+            const requiredFeatures = formData.getAll('required_features').join(', ');
+            const antiFeatures = formData.getAll('anti_features').join(', ');
+            const complianceServices = formData.getAll('compliance_services').join(', ');
+            const payload = {
+                client_name: formData.get('client_name') || 'Anon Ymous',
+                company_name: formData.get('company_name') || null,
+                primary_goal: formData.get('primary_goal') || 'Unspecified goal',
+                budget_range: formData.get('budget_range') || 'TBD',
+                timeline: formData.get('timeline') || 'TBD',
+                creative_energy: parseInt(formData.get('creative_energy') || '3', 10),
+                discovery_source: formData.get('discovery_source') || 'Direct Discovery',
+                business_summary: formData.get('business_summary') || null,
+                anti_features: antiFeatures || null,
+                required_features: requiredFeatures || null,
+                compliance_services: complianceServices || null,
+                has_accessibility_priority: formData.has('has_accessibility_priority'),
+                status: 'Received'
+            };
+
+            // Save to Supabase
             const {data, error} = await supabaseClient
                 .from('project_briefs')
                 .insert([payload]);
 
-            if (error) throw error;
+            if (error) {
+                throw new Error(error.message);
+            }
 
+            // Send email alert via Web3Forms
+            const web3FormData = new FormData();
+            web3FormData.append("access_key", "53f6faa6-c347-46cd-a7ff-b4cb6defd107");
+            web3FormData.append("subject", `✨ New Project Brief from ${payload.client_name}`);
+            web3FormData.append("from_name", "SoftStack Intake Bot");
+            web3FormData.append("client_name", payload.client_name);
+            web3FormData.append("company_name", payload.company_name || "N/A");
+            web3FormData.append("email", formData.get('email'));
+            web3FormData.append("phone", formData.get('phone'));
+            web3FormData.append("preferred_contact", formData.get('preferred_contact'));
+            web3FormData.append("business_summary", payload.business_summary || "N/A");
+            web3FormData.append("primary_goal", payload.primary_goal);
+            web3FormData.append("budget_range", payload.budget_range);
+            web3FormData.append("timeline", payload.timeline);
+            web3FormData.append("compliance_services", complianceServices || "None Selected");
+            web3FormData.append("required_features", requiredFeatures || "None Selected");
+            web3FormData.append("anti_features", antiFeatures || "None Specified");
+
+            await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: web3FormData
+            });
+
+            // If successful, reset the form and show the success modal
             onboardingForm.reset();
             successModal.style.display = 'flex';
 

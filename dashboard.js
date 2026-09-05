@@ -97,8 +97,9 @@ function openInspectionModal(item) {
     }
     document.getElementById('modalAntiFeatures').textContent = antiFeaturesText;
 
-    const accommodations = item.access_accommodations || item.accessibility_requirements || 'No specific accommodations flagged.';
-    document.getElementById('modalAccess').textContent = accommodations;
+    // Handle accessibility & compliance accommodations
+    const complianceServices = item.compliance_services || item.access_accommodations || item.accessibility_requirements || 'No specific accommodations flagged.';
+    document.getElementById('modalAccess').textContent = complianceServices;
 
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -106,17 +107,16 @@ function openInspectionModal(item) {
 
     // Trap focus inside modal
     window.addEventListener('keydown', handleModalFocusTrap);
-
     // Set focus to the close button
     closeModalBtn.setAttribute('tabindex', '0');
     closeModalBtn.setAttribute('aria-label', 'Close inspection modal');
     closeModalBtn.focus();
 }
 
-// Toggle between local dev and live production API
+    // Toggle between local dev and live production API
     const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://127.0.0.1:8000'
-    : 'https://api.softstack.studio'; // or your Render/Railway backend URL
+    : 'https://api.softstack.studio';
 
     async function fetchPipelineData() {
     const rowsContainer = document.getElementById('pipelineRows');
