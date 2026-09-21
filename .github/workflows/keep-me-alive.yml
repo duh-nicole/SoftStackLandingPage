@@ -9,11 +9,12 @@ jobs:
   ping-supabase:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase Health Endpoint
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      - name: Send GET Request to Supabase REST API
         run: |
-          TARGET_URL="${SUPABASE_URL}/auth/v1/health"
-          echo "Pinging $TARGET_URL..."
+          TARGET_URL="${{ secrets.SUPABASE_URL }}/rest/v1/"
+          API_KEY="${{ secrets.SUPABASE_ANON_KEY }}"
+          echo "Pinging Supabase REST API..."
           curl --globoff --fail --silent --show-error --location "$TARGET_URL" \
+            -H "apikey: $API_KEY" \
+            -H "Authorization: Bearer $API_KEY" \
             --output /dev/null
