@@ -148,6 +148,30 @@ a:focus-visible {
     justify-content: center;
 }
 
+/* Navigation Call-to-Action Button */
+.nav-cta-btn {
+    background-color: var(--primary-accent);
+    color: #ffffff !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-cta-btn:hover {
+    background-color: var(--secondary-accent);
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nav-cta-btn {
+    color: #1c121e !important;
+}
+
+[data-theme="dark"] .nav-cta-btn:hover {
+    color: #25161b !important;
+}
+
+
 /* Dropdown Navigation */
 .nav-dropdown {
     position: relative;
@@ -168,13 +192,6 @@ a:focus-visible {
 
 .nav-dropdown-btn:hover {
     background-color: var(--secondary-accent);
-}
-
-[data-theme="dark"] .submit-btn,
-[data-theme="dark"] .nav-dropdown-btn,
-[data-theme="dark"] .modal-btn.primary-btn {
-    color: #1c121e;
-    font-weight: 700;
 }
 
 .dropdown-content {
@@ -322,6 +339,39 @@ main section:last-of-type {
     }
 }
 
+   /* Status Callout Banner */
+.status-banner {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px 16px;
+    display: inline-block;
+    color: var(--text-main);
+}
+
+/* Hero Action Group Alignment */
+.hero-cta-group .contact-link {
+    background-color: var(--primary-accent);
+    color: #ffffff;
+    border-radius: 8px;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-cta-group .contact-link:hover {
+    background-color: var(--secondary-accent);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .hero-cta-group .contact-link {
+    color: #1c121e;
+}
+
+[data-theme="dark"] .hero-cta-group .contact-link:hover {
+    color: #25161b;
+}
+
 /* ==========================================================================
    05. SERVICES GRID & ITEMS
    ========================================================================== */
@@ -370,6 +420,32 @@ main section:last-of-type {
     line-height: 1.6;
 }
 
+/* Service Badges */
+.service-item .badge {
+    background-color: var(--badge-bg);
+    color: var(--badge-text);
+    border: 1px solid var(--border-color);
+}
+
+/* Featured / Most Popular Badge Highlight */
+.badge.featured,
+.badge-featured {
+    background-color: var(--primary-accent);
+    color: #ffffff;
+    border: none;
+}
+
+[data-theme="dark"] .badge.featured,
+[data-theme="dark"] .badge-featured {
+    color: #1c121e;
+}
+
+/* Highlight "Most Popular" Card */
+.service-item.featured {
+    border-color: var(--primary-accent);
+    box-shadow: 0 6px 18px var(--shadow);
+}
+   
 .badge {
     display: inline-block;
     background-color: var(--badge-bg);
