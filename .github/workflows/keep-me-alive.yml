@@ -18,4 +18,5 @@ jobs:
           echo "Sending ping to Supabase..."
           curl --globoff --fail --silent --show-error --location "$TARGET_URL" \
             --header "apikey: $SUPABASE_ANON_KEY" \
+            --header "Authorization: Bearer $SUPABASE_ANON_KEY" \
             --output /dev/null
