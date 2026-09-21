@@ -258,7 +258,7 @@ a:focus-visible {
 
 main section {
     padding: 3.5rem 0;
-    border-bottom: 1px dashed var(--border-color);
+    border-bottom: none !important;
 }
 
 main section:last-of-type {
@@ -327,7 +327,7 @@ main section:last-of-type {
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 30px;
-    border-bottom: 2px dashed var(--border-color);
+    border-bottom: none;
     padding-bottom: 10px;
     color: var(--primary-accent);
 }
@@ -495,7 +495,7 @@ main section:last-of-type {
 
 .card-window-header {
     background: var(--input-bg);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: none;
     padding: 10px 15px;
     font-size: 0.8rem;
     font-weight: bold;
@@ -677,7 +677,7 @@ main section:last-of-type {
 
 .form-intro {
     margin-bottom: 40px;
-    border-bottom: 2px dashed var(--border-color);
+    border-bottom: none;
     padding-bottom: 20px;
 }
 
@@ -926,7 +926,7 @@ input[type="radio"] {
     padding: 40px 20px;
     color: var(--text-muted);
     font-size: 0.85rem;
-    border-top: 1px solid var(--border-color);
+    border-top: none;
     margin-top: 60px;
     font-family: monospace;
 }
@@ -1032,7 +1032,7 @@ input[type="radio"] {
     font-family: monospace;
     font-size: 0.85rem;
     color: var(--text-muted);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: none;
 }
 
 .modal-body {
