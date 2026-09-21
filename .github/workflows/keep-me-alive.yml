@@ -9,29 +9,14 @@ jobs:
   ping-supabase:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug Environment Variables
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: |
-          if [ -z "$SUPABASE_URL" ]; then
-            echo "ERROR: SUPABASE_URL secret is EMPTY or NOT FOUND!"
-            exit 1
-          else
-            echo "SUPABASE_URL is set."
-          fi
-
-          if [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "ERROR: SUPABASE_ANON_KEY secret is EMPTY or NOT FOUND!"
-            exit 1
-          else
-            echo "SUPABASE_ANON_KEY is set."
-          fi
-
       - name: Send GET Request to Supabase REST API
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          curl -i -X GET "${SUPABASE_URL}/rest/v1/" \
-            -H "apikey: ${SUPABASE_ANON_KEY}"
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${SUPABASE_URL}/rest/v1/" -H "apikey: ${SUPABASE_ANON_KEY}")
+          echo "Supabase returned HTTP Status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Request failed with status $HTTP_STATUS"
+            exit 1
+          fi
